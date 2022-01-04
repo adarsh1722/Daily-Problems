@@ -7,12 +7,14 @@ public:
         
         int res = 0, ind = 0;
         while(num > 0){
-            //find single digit from low to high significance
-            int digit = num % 2; 
-            int flippedDigit = (digit == 1? 0 : 1); // flip digit
-            res += (flippedDigit << ind);
-            num /= 2;            
+           
+            if(!(num & 1))
+            {
+                res += (1 << ind );
+            }
             ind++;
+            num >>= 1;
+            
         }
         return res;
     }
