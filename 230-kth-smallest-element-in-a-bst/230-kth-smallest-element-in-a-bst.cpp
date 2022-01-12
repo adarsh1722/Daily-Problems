@@ -6,8 +6,8 @@ public:
     {
         if(!root) return  ;
         inorder(root->left , k , cnt);
-        cnt += 1;
-        if(cnt == k){
+        
+        if(++cnt == k){
             ans = root->val;
             return;
         }
