@@ -1,29 +1,41 @@
 
 class Solution {
-public:
-    vector<int>in;
-    void inorder(TreeNode* root)
-    {
-        if(!root) return;
-        inorder(root->left);in.push_back(root->val);inorder(root->right);
-        
-    }
-    void correctBST(TreeNode* root, int& i)
-    {
-        if(!root) return;
-        correctBST(root->left, i);
-        root->val = in[i++];
-        correctBST(root->right, i);
-        
-    }
-    void recoverTree(TreeNode* root) {
-        TreeNode* dummy = root;
-        inorder(root);
-        sort(in.begin(), in.end());
-        int i = 0;
-        correctBST(dummy , i);
-        
-        
+    private:
+         TreeNode* first;
+         TreeNode* middle;
+         TreeNode* prev;
+         TreeNode* last;
+    
+    private:
+         void inorder(TreeNode* root)
+         {
+             if(root == NULL) return ;
+             inorder(root->left);
+             if(prev != NULL && root->val < prev->val)
+             {
+                 if(first  == NULL)
+                 {
+                     first = prev;
+                     middle = root;
+                 }
+                 else
+                 {
+                     last = root;
+                 }
+                 
+             }
+             prev = root;
+             inorder(root->right);
+         }
+            
+    public:
+          void recoverTree(TreeNode* root) {
+              
+            first = middle = last = NULL;
+            prev = new TreeNode(INT_MIN);
+            inorder(root);
+            if(first && last) swap(first->val  , last->val);
+            else if(first && middle) swap(first->val , middle->val);
         
     }
 };
