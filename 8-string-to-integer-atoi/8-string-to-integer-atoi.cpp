@@ -10,14 +10,7 @@ public:
             return 0;
         }
         
-//         while(i < s.size() && s[i] >= 'a' && s[i] <= 'z')i += 1; // alphabets
-        
-//         if(i >= s.size())
-//         {
-//             return 0;
-//         }
-        
-        
+               
         int sign = 1;
         
         if(s[i] == '+' || s[i] == '-') // sign
