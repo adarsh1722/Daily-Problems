@@ -29,7 +29,7 @@ public:
             if(arr[i] > 0)
             {
                 v[1] = i + 1;
-                // break;
+                break;
             }
         }
         
