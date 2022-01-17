@@ -10,19 +10,29 @@ public:
         // code here
         int *v = new int[2];
         
-        unordered_map<int , int>mp;
         for(int i = 0 ; i < n ; i++)
         {
-            mp[arr[i]]++;
+            if(arr[abs(arr[i]) - 1] > 0)
+            {
+                arr[abs(arr[i]) - 1] *= -1;
+            }
+            else
+            {
+                v[0] = abs(arr[i]);
+                // break;
+            }
         }
         
-        for(int i = 1 ; i <= n ; i++)
+        for(int i = 0 ; i < n ; i++)
         {
-            if(mp[i] == 2)
-            v[0] = i;
-            else if(mp[i] == 0)
-            v[1] = i;
+            
+            if(arr[i] > 0)
+            {
+                v[1] = i + 1;
+                // break;
+            }
         }
+        
         return v;
     }
 };
