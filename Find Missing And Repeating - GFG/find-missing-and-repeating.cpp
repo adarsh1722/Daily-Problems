@@ -7,40 +7,23 @@ using namespace std;
 class Solution{
 public:
     int *findTwoElement(int *arr, int n) {
-        
-        // using array itself as a hash table
-        
+        // code here
         int *v = new int[2];
         
+        unordered_map<int , int>mp;
         for(int i = 0 ; i < n ; i++)
         {
-            
-            if(arr[abs(arr[i]) - 1] > 0)
-            {
-                arr[abs(arr[i])- 1] = -1*arr[abs(arr[i]) - 1];
-            }
-            else
-            {
-                v[0] = abs(arr[i]);
-                // break;
-            }
+            mp[arr[i]]++;
         }
         
-        
-        
-        for(int i = 0 ; i < n ; i++)
+        for(int i = 1 ; i <= n ; i++)
         {
-            
-            // // cout << arr[i] << " ";
-            if(arr[i] > 0)
-            {
-                v[1] = i + 1;
-            }
+            if(mp[i] == 2)
+            v[0] = i;
+            else if(mp[i] == 0)
+            v[1] = i;
         }
-        
-        return  v;
-        
-       
+        return v;
     }
 };
 
