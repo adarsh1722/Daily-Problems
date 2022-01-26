@@ -48,6 +48,9 @@ class Solution
     //Function to check if the linked list has a loop.
     bool detectLoop(Node* head)
     {
+        // Time Complexity = O(N)
+        // Space Complexity = O(1) 
+        
         Node* fast , * slow;
         fast = slow = head;
         
