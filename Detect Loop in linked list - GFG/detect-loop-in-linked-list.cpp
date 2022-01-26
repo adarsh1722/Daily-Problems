@@ -48,20 +48,16 @@ class Solution
     //Function to check if the linked list has a loop.
     bool detectLoop(Node* head)
     {
-        // Time Complexity = O(N)
-        // Space Complexity = O(1) 
+        unordered_map<Node* , int>mp;
         
-        Node* fast , * slow;
-        fast = slow = head;
-        
-        while(fast != NULL  && fast->next != NULL)
+        while(head != NULL)
         {
-            slow = slow->next;
-            fast = fast->next->next;
-            if(slow == fast)
-             return true;
+            if(mp.find(head->next) != mp.end()) return true;
+            
+            mp[head] = 1;
+            head = head->next;
         }
-        return false;
+        return  false;
         
     }
 };
