@@ -74,12 +74,12 @@ bool isCircular(Node *head)
 {
    if(!head) return true;
    
-  
+  Node* t = head;
    
+   head = head->next;
    while(head != NULL)
    {
-       if(seen[head] > 0) return true;
-       seen[head] = 1;
+       if(head == t) return true;
        head = head->next;
    }
    return false;
