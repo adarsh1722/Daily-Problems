@@ -28,26 +28,55 @@ struct Node {
   }
 };
 */
-#include<bits/stdc++.h>
+
 class Solution{
   public:
     //Function to check whether the list is palindrome.
-    bool isPalindrome(Node *head)
+    Node* reverse(Node* head)
     {
-        vector<int>v;
+        Node* prev = NULL , *next ;
+   
         while(head)
         {
-            v.push_back(head->data);
-            head = head->next;
+            next = head->next;
+            head->next = prev;
+            prev = head;
+            head = next;
         }
+        return prev;
         
-        int n = v.size();
-        
-        for(int i = 0 ; i < n/2 ; i++)
-        {
-            if(v[i] != v[n-i-1]) return false;
-        }
-        return true;
+    }
+    bool isPalindrome(Node *head)
+    {
+        if(head == NULL || head->next == NULL)
+         return true;
+         
+         Node* slow , * fast;
+         
+         slow = fast = head;
+         
+         while(fast && fast->next)
+         {
+             slow = slow->next;
+             fast = fast->next->next;
+         }
+         if(fast != NULL)
+         {
+             slow = slow->next;
+         }
+         slow = reverse(slow);
+         fast = head;
+         
+         while(slow != NULL)
+         {
+             if(fast->data != slow->data)
+               return false;
+             
+             slow = slow->next;
+             fast = fast->next;
+         }
+         return true;
+         
     }
 };
 
