@@ -84,41 +84,30 @@ int main()
 
 // are pointers to head pointers of resultant two halves.
 
-int getlength(Node* head)
-{
-    int len = 1;
-    Node* t = head;
-    while(t->next != head)
-    {
-        len++;
-        t = t->next;
-    }
-    return len;
-}
 void splitList(Node *head, Node **head1_ref, Node **head2_ref)
 {
-    int len = getlength(head);
-    
-    int mid = (len+1)/2;
-    
-    Node* prev = NULL , *curr = head;
-    
-    for(int  i = 1 ; i <= mid ; i++)
+    Node* slow = head , *fast = head;
+    while(fast->next != head && fast->next->next != head)
     {
-        prev = curr;
-        curr = curr->next;
+        
+        slow = slow->next;
+        fast = fast->next->next;
     }
-    prev->next = head;
     
-    Node* second = curr;
+    *head1_ref = head; // first doubly
+    *head2_ref = slow->next;
+     slow->next = head;
+     
+     if(fast->next == head)
+     {
+         fast->next = *head2_ref;
+     }
+     else
+     {
+         fast->next->next = *head2_ref;
+     }
     
-    while(second->next != head)
-    {
-        second = second->next;
-    }
-    second->next = curr;
-    *head1_ref = head;
-    *head2_ref = curr;
+    
     
     
     
