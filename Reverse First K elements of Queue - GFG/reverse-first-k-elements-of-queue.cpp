@@ -32,24 +32,26 @@ int main() {
 // Function to reverse first k elements of a queue.
 queue<int> modifyQueue(queue<int> q, int k) {
     
-    if(k == 0 ) return q;
+    if(k == 0 || k > q.size() || q.empty() ) return q;
     
-    vector<int>temp;
-    while(!q.empty())
-    {
-        temp.push_back(q.front());
+   
+    stack<int>st;
+    for(int i = 0 ; i < k ; i++){
+        st.push(q.front());
         q.pop();
+    }
+    
+    while(!st.empty()){
+        q.push(st.top());
         
+        st.pop();
     }
     
-    int l = 0 , r = k - 1;
-    while(l < r){
-        swap(temp[l++] , temp[r--]);
-    }
-    
-    for(auto x : temp){
-        q.push(x);
+    for(int i = 0 ; i < q.size() - k ; i++){
+        q.push(q.front());
+        q.pop();
     }
     return q;
+    
     
 }
