@@ -15,7 +15,7 @@ public:
        S-=1;
        for(int i = m-1 ; i>0 ; i--)
        {
-           if(S > 9)
+           if(S >= 9)
            {
                res[i] = 9;
                S -= 9;
