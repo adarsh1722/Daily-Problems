@@ -88,22 +88,18 @@ Node* reverseDLL(Node * head)
 {
    if(head == NULL) return NULL;
    
-   vector<int>temp;
-   Node* t = head;
-   while(t != NULL){
-       temp.push_back(t->data);
-       t = t->next;
+   Node* curr = head  , *temp = NULL;
+   
+   while(curr != NULL){
+       temp = curr->prev;
+       curr->prev = curr->next;
+       curr->next = temp;
+       curr = curr->prev;
    }
    
-   reverse(temp.begin() , temp.end());
-   int i = 0;
-   t = head;
-   while(t)
-   {
-       t->data = temp[i++];
-       t = t->next;
-   }
-   
+   if(temp != NULL)
+      head = temp->prev;
+      
    return head;
    
 }
