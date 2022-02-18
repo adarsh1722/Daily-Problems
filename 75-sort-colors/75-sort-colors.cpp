@@ -2,30 +2,31 @@ class Solution {
 public:
     void sortColors(vector<int>& nums) {
         
-       int cnt0 = 0 ,cnt1 = 0, cnt2 = 0;
-       
-        for(auto x : nums)
-        {
-            if(x == 0) cnt0++;
-            else if(x == 1) cnt1++;
-            else cnt2++;
-        }
+        int n = nums.size();
+        int i = 0 , j = 0 , k = n-1;
         
-        int i = 0 ;
-        while(cnt0--)
+        // i marks the territory of the 0 
+        // j checks whether the current element is 0 , 1 or 2
+        // k marks the territory of the 2
+        while(j <= k)
         {
-            nums[i++] = 0;
-            
+            if(nums[j] == 0)
+            {
+                swap(nums[i] , nums[j]);
+                i++;
+                j++;
+                
+            }
+            else if(nums[j] == 2)
+            {
+                swap(nums[j] , nums[k]);
+                k--;
+            }
+            else
+            {
+                j+=1;
+            }
         }
-        while(cnt1--)
-        {
-            nums[i++] = 1;
-        }
-        while(cnt2--)
-        {
-            nums[i++] = 2;
-        }
-        
         
     }
 };
