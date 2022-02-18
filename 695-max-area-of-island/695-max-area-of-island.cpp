@@ -2,10 +2,10 @@ class Solution {
 public:
     void dfs(int i, int j, vector<vector<bool>>& vis, vector<vector<int>>& grid, int &cnt)
     {
-        if(i < 0 || i == grid.size() || j < 0 || j == grid[0].size() || vis[i][j] == true || grid[i][j] == 0)
+        if(i < 0 || i == grid.size() || j < 0 || j == grid[0].size()  || grid[i][j] == 0)
             return;
         
-        vis[i][j] = true;
+        grid[i][j] = 0;
         cnt++;
         
         dfs(i-1, j, vis, grid, cnt);
@@ -23,7 +23,7 @@ public:
         {
             for(int j=0; j<n; j++)
             {
-                if(vis[i][j] == false && grid[i][j] == 1)
+                if( grid[i][j] == 1)
                 {
                     int cnt = 0;
                     dfs(i, j, vis, grid, cnt);
