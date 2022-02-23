@@ -1,39 +1,43 @@
 class Solution {
 public:
-    void setZeroes(vector<vector<int>>& matrix) {
+    void setZeroes(vector<vector<int>>& mat) {
         
-        bool zeroFound = true;
+        int m = mat.size();
+        int n = mat[0].size();
         
-        int n = matrix.size();
-        int m = matrix[0].size();
-        
-        for(int i = 0 ; i < n ; i++)
+        vector<pair<int , int>>v;
+        for(int i = 0 ; i < m ; i++)
         {
-            if(matrix[i][0] == 0) zeroFound = false;
-            for(int j = 1 ; j < m ; j++)
+            for(int j = 0 ; j < n ; j++)
             {
-                if(matrix[i][j] == 0)
+                if(mat[i][j] == 0)
                 {
-                    matrix[i][0] = 0;
-                    matrix[0][j] = 0;
+                    v.push_back({i , j});
                 }
             }
+                
+        }
+        
+        int sz = v.size();
+        
+        for(int k = 0 ; k < sz ; k++)
+        {
+            int row = v[k].first;
+            int col = v[k].second;
+            
+            // make the row zeroe
+            
+            for(int j = 0; j < n ; j++)
+                mat[row][j] = 0;
+            
+            // make the column zero
+            for(int i = 0 ; i < m ; i++)
+                mat[i][col] = 0;
+                
             
         }
         
-        for(int i = n-1 ; i >= 0 ; i--)
-        {
-            for(int j = m-1 ;j >= 1 ; j--)
-            {
-                if(matrix[i][0] == 0|| matrix[0][j] == 0)
-                {
-                    matrix[i][j] = 0;
-                }
-            }
-            if(!zeroFound)
-                matrix[i][0] = 0;
-        }
-
+        
         
     }
 };
