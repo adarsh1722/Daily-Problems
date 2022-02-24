@@ -6,26 +6,32 @@ using namespace std;
  // } Driver Code Ends
 class Solution{
     public:
-        
-        void merge(long long arr1[], long long arr2[], int n, int m) 
+        //Function to merge the arrays.
+        void merge(long long ar1[], long long ar2[], int n, int m) 
         { 
-            vector<int>temp;
-            for(int i = 0 ; i < n ; i++)
-            {
-                temp.push_back(arr1[i]);
-            }
-            for(int i = 0 ; i < m ; i++)
-            {
-                temp.push_back(arr2[i]);
-            }
             
-            sort(temp.begin() , temp.end());
-            
-            for(int i = 0 ; i < n ; i++)
-            arr1[i] = temp[i];
-            
-            for(int i = 0 ; i < m ; i++)
-            arr2[i] = temp[i+n];
+              int gap = ceil((float)(n + m) / 2);
+              while (gap > 0) {
+                int i = 0;
+                int j = gap;
+                while (j < (n + m)) {
+                  if (j < n && ar1[i] > ar1[j]) {
+                    swap(ar1[i], ar1[j]);
+                  } else if (j >= n && i < n && ar1[i] > ar2[j - n]) {
+                    swap(ar1[i], ar2[j - n]);
+                  } else if (j >= n && i >= n && ar2[i - n] > ar2[j - n]) {
+                    swap(ar2[i - n], ar2[j - n]);
+                  }
+                  j++;
+                  i++;
+                }
+                if (gap == 1) {
+                  gap = 0;
+                } else {
+                  gap = ceil((float) gap / 2);
+                }
+              }
+           
             
         } 
 };
