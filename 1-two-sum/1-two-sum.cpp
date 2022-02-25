@@ -4,13 +4,17 @@ public:
         
         int n = nums.size();
         
-        for(int i = 0 ; i  < n  ; i++)
+        unordered_map<int  , int>mp;
+        
+        for(int i = 0 ; i < n ; i++)
         {
-            for(int j = i+1 ; j < n ; j++)
-            {
-                if(nums[i] + nums[j] == target){
-                    return {i , j};
-                }
+            int complement = target - nums[i];
+            
+            if(mp.find(complement) != mp.end()){
+                return {i , mp[complement]};
+            }
+            else{
+                mp[nums[i]] = i;
             }
         }
         return {};
