@@ -11,30 +11,22 @@
 class Solution {
 public:
     ListNode* reverseList(ListNode* head) {
- 
-       
-        vector<int>arr;
         
-        ListNode* temp = head;
-        while(temp)
+        ListNode* prev , *curr;
+        prev = NULL;
+        curr = head;
+        
+        while(curr != NULL)
         {
-            arr.push_back(temp->val);
-            temp = temp->next;
+            ListNode* next = curr->next;
+            curr->next = prev;
+            prev = curr;
+            curr = next;
         }
         
-        reverse(arr.begin() , arr.end());
-        
-        temp = head;
-        
-        int i = 0;
-        
-        while(temp)
-        {
-            temp->val = arr[i++];
-            temp = temp->next;
-        }
-        
+        head = prev;
         return head;
+        
         
     }
 };
