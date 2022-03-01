@@ -1,11 +1,4 @@
-/**
- * Definition for singly-linked list.
- * struct ListNode {
- *     int val;
- *     ListNode *next;
- *     ListNode(int x) : val(x), next(NULL) {}
- * };
- */
+
 class Solution {
 public:
     int countNodes(ListNode *head)
@@ -32,12 +25,12 @@ public:
         
         if(n1 > n2)
         {
-            for(int i = 0 ; i < diff ; i++)
+            for(int i = 1 ; i <= diff ; i++)
                 t1 = t1->next;
         }
         else
         {
-            for(int i = 0 ; i < diff ; i++)
+            for(int i = 1 ; i <= diff ; i++)
                 t2 = t2->next;
         }
         
