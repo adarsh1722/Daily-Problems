@@ -8,27 +8,45 @@
  */
 class Solution {
 public:
+    int countNodes(ListNode *head)
+    {
+        int n = 0;
+        ListNode* t = head;
+        while(t)
+        {
+            n++;
+            t = t->next;
+        }
+        return n;
+    }
     ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
         
-        // approach : using high level idea 
-        // space: O(1)
-        // time :o(n)
+        if(!headA || !headB) return NULL; 
         
-        // we dont have to find out which one is shorter or longer
+        int n1 = countNodes(headA);
+        int n2 = countNodes(headB);
         
-        ListNode* t1 = headA;
-        ListNode* t2 = headB;
-        while(t1!=t2)
+        int diff = abs(n1 - n2);
+        
+        ListNode* t1 = headA , *t2 = headB;
+        
+        if(n1 > n2)
         {
-            if(t1==NULL) t1= headB;
-            else if(t2==NULL) t2 = headA;
-            else
-            {
-                t1=t1->next;
-                t2=t2->next;
-            }
+            for(int i = 0 ; i < diff ; i++)
+                t1 = t1->next;
         }
-       return t1;
+        else
+        {
+            for(int i = 0 ; i < diff ; i++)
+                t2 = t2->next;
+        }
+        
+        while(t1 != t2)
+        {
+            t1 = t1->next;
+            t2 = t2->next;
+        }
+        return t1;
         
     }
 };
