@@ -8,7 +8,7 @@ public:
         ListNode* t = head;
         while(t != NULL)
         {
-            if(hashSet.count(t))
+            if(hashSet.find(t) != hashSet.end())
             {
                 return true;
             }
