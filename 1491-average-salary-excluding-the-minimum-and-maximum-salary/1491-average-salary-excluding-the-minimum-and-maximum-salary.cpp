@@ -3,16 +3,13 @@ public:
     double average(vector<int>& salary) {
         
         int n = salary.size();
-        int minn = INT_MAX;
-        int maxx = INT_MIN;
+        sort(salary.begin() , salary.end());
         double sum = 0;
-        for(int x : salary){
-            minn = min(minn ,x);
-            maxx = max(maxx ,x);
-            sum += double(x);
+        for(int i = 1 ; i<= n-2 ; i++)
+        {
+            sum += double(salary[i]);
         }
-        
-        return (sum - (minn + maxx))/(n-2);
+        return (sum)/(n-2);
         
     }
 };
