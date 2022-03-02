@@ -91,38 +91,19 @@ int main(void) {
 }
 // } Driver Code Ends
 
-
-/* Node structure  used in the program
-
-struct Node{
-	int data;
-	struct Node * next;
-	struct Node * bottom;
-	
-	Node(int x){
-	    data = x;
-	    next = NULL;
-	    bottom = NULL;
-	}
-	
-};
-*/
-
-Node *mergedTwoLists(Node *a , Node* b)
+Node* mergedTwoLists(Node* a , Node* b)
 {
     Node* temp = new Node(0);
     Node* res = temp;
     
-    while(a != NULL && b!= NULL)
+    while(a != NULL && b != NULL)
     {
-        if(a->data <= b->data)
-        {
+        if(a->data <= b->data){
             temp->bottom = a;
             temp = temp->bottom;
             a = a->bottom;
         }
-        else
-        {
+        else{
             temp->bottom = b;
             temp = temp->bottom;
             b = b->bottom;
@@ -133,19 +114,15 @@ Node *mergedTwoLists(Node *a , Node* b)
     
     return res->bottom;
     
-   
 }
-
-Node* flatten(Node* root)
+Node *flatten(Node *root)
 {
-    if(root == NULL || root->next == NULL)
-    {
+    if(root == NULL || root->next == NULL){
         return root;
     }
     root->next = flatten(root->next);
-    
     root = mergedTwoLists(root , root->next);
-    
     return root;
+   
 }
 
