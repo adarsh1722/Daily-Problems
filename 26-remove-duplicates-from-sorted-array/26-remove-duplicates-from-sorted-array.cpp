@@ -7,10 +7,11 @@ public:
             hashSet.insert(x);
         }
         
-        set<int>::iterator it = hashSet.begin();
+        // making something as i = 0 
+        set<int>::iterator i = hashSet.begin(); 
         for(auto &x : nums){
-            x = *it;
-            it++;
+            x = *i; // dereferencing the iterator
+            i++; // moving iterator one step ahead
         }
         return hashSet.size();
         
