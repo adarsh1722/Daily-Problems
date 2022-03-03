@@ -2,20 +2,21 @@ class Solution {
 public:
     int removeDuplicates(vector<int>& nums) {
         
-        set<int>hashSet;
-        for(auto x : nums){
-            hashSet.insert(x);
+        int p1  , p2  , n = nums.size();
+        p1 = 0 , p2 = 1;
+        while(p2 < n)
+        {
+            if(nums[p1] == nums[p2]){
+                p2 += 1;
+            }
+            else{
+                p1 +=1;
+                swap(nums[p1] , nums[p2] );
+                p2 += 1;
+            }
         }
         
-        // making something as i = 0 
-        set<int>::iterator i = hashSet.begin(); 
-        for(auto &x : nums){
-            x = *i; // dereferencing the iterator
-            i++; // moving iterator one step ahead
-        }
-        return hashSet.size();
-        
-        
+        return p1 + 1; // because of 0 based-indexing 
         
     }
 };
