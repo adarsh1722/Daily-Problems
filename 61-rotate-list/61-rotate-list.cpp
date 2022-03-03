@@ -10,38 +10,34 @@
  */
 class Solution {
 public:
-    void reverse(vector<int>&arr , int start , int end)
-    {
-        while(start < end){
-            swap(arr[start++] , arr[end--]);
-        }
-    }
     ListNode* rotateRight(ListNode* head, int k) {
         
-        if(head == NULL){
+        if(head == NULL || head->next == NULL){
             return head;
         }
         
-        vector<int>arr;
         ListNode* t = head;
-        while(t)
-        {
-            arr.push_back(t->val);
+        int n = 0;
+        while(t){
+            n++;
             t = t->next;
         }
-        int n = arr.size();
-        k = k%n;
-        reverse(arr , 0 , n-1);
-        reverse(arr , 0 , k-1 );
-        reverse(arr , k , n-1);
         
-        t = head;
-        int i = 0;
-        while(t)
+        k = k%n;
+        while(k--)
         {
-            t->val = arr[i++];
-            t = t->next;
+            ListNode * it = head;
+            for(int i = 0 ; i < n-2 ; i++)
+            {
+                it = it->next;
+            }
+            ListNode* last = it->next;
+            it->next = NULL;
+            last->next = head;
+            head = last;
         }
+        
         return head;
+        
     }
 };
