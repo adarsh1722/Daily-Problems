@@ -5,12 +5,10 @@ public:
         int ones = 0 , max_ones = 0;
         for(auto x : nums){
             
-            if(x == 1){
+            if(x == 1)
                 max_ones = max(++ones , max_ones);
-            }
-            else{       
-                ones = 0;                
-            }
+            else 
+                ones = 0;
             
         }
         return max_ones;
