@@ -6,28 +6,33 @@ using namespace std;
 class Solution
 {
 public:
-    void solve(int idx , vector<int>&arr , int &curr_sum , vector<int>&ans)
+    
+    void sum(vector<int>&arr , int i , int N , int curr_sum , vector<int>&ans)
     {
-        if(idx == arr.size())
-        {
+        if(i >= N){
             ans.push_back(curr_sum);
             return;
         }
         
-        // pick
-        curr_sum += arr[idx];
-        solve(idx+1 , arr , curr_sum, ans);
-        // not pick
-        curr_sum -= arr[idx];
-        solve(idx+1 , arr , curr_sum , ans);
+        // we have two choices -
+        
+        // 1. pick
+        sum(arr , i+1 , N ,curr_sum + arr[i] , ans);
+        // 2. Not pick
+        sum(arr , i+1 , N , curr_sum , ans);
+                                
+                                
     }
+    
     vector<int> subsetSums(vector<int> arr, int N)
     {
-       vector<int>ans;
-       int curr_sum = 0;
-       solve(0 , arr , curr_sum , ans);
-       sort(ans.begin() , ans.end());
-       return ans;
+        vector<int>ans;
+        
+        sum(arr , 0  , N ,0, ans);
+        
+        return ans;
+        
+        
     }
 };
 
