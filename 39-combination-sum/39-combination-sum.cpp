@@ -1,30 +1,32 @@
 class Solution {
 public:
-    void findComb(int idx , int target , vector<int>&arr ,vector<vector<int>>&ans , vector<int>&ds)
+    void getCombination(int idx ,int target , vector<int>&arr , vector<vector<int>>&ans , vector<int>&ds)
     {
-        if(idx == arr.size())
-        {
-            if(target == 0)
-            {
+        // base case
+        if(idx >= arr.size()){
+            if(target == 0){
                 ans.push_back(ds);
             }
             return;
         }
         // pick
-        if(arr[idx] <= target)
-        {
+        if(arr[idx] <= target){
+            
             ds.push_back(arr[idx]);
-            findComb(idx , target - arr[idx] , arr , ans , ds);
+            getCombination(idx , target- arr[idx] , arr , ans , ds);
             ds.pop_back();
+            
         }
-        // non-pick
-        findComb(idx+1 , target , arr , ans , ds);
+        // not-pick
+        getCombination(idx+1 , target , arr , ans ,ds);
+        
     }
-    vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
+    vector<vector<int>> combinationSum(vector<int>& arr, int target) {
         
         vector<vector<int>>ans;
         vector<int>ds;
-        findComb(0 , target , candidates , ans ,ds);
+        getCombination(0 , target , arr , ans , ds );
         return ans;
+        
     }
 };
