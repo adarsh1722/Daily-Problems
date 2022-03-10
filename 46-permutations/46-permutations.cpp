@@ -1,33 +1,24 @@
 class Solution {
 public:
-    void solve(vector<int>&nums ,vector<int>&ds ,vector<int>&hashMap ,vector<vector<int>>&ans)
+    void recurPermute(int index , vector<int>&nums , vector<vector<int>>& ans)
     {
-        if(ds.size() == nums.size()){
-            ans.push_back(ds);
+        if(index == nums.size()){
+            ans.push_back(nums);
             return;
         }
-        
-        for(int i = 0 ; i < nums.size() ; i++ ){
-         
-            if(hashMap[i] == -1){
-                hashMap[i] = 1;
-                ds.push_back(nums[i]);
-                solve(nums , ds , hashMap , ans );
-                ds.pop_back();
-                hashMap[i] = -1;
-            }
-            
+        for(int i = index ; i < nums.size() ; i++){
+            swap(nums[index] , nums[i]);
+            recurPermute(index + 1 , nums , ans);
+            swap(nums[index] , nums[i]);
         }
-        
         
     }
     vector<vector<int>> permute(vector<int>& nums) {
         
         vector<vector<int>>ans;
-        vector<int>ds;
-        vector<int>hashMap(nums.size() , -1);
-        solve(nums , ds ,hashMap ,ans);
+        recurPermute(0 , nums , ans);
         return ans;
         
     }
+    
 };
