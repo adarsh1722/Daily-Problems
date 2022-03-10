@@ -1,25 +1,26 @@
 class Solution {
 public:
+    int next(int n)
+    {
+        int sum = 0;
+        while(n!=0)
+        {
+            sum += pow(n%10 , 2);
+            n = n/10;
+        }
+        return sum;
+    }
     bool isHappy(int n) {
         
-        unordered_map<int , int>mp;
-        while(n > 1){
-            
-            int sum = 0;
-            while(n)
-            {
-                int r = n%10;
-                sum += r*r;
-                n /= 10;
-            }
-            
-            if(mp.find(sum) != mp.end()) return false;
-            mp[sum] = 1;
-            n = sum;
+        int slow = next(n);
+        int fast = next(next(n));
+        
+        while(slow != fast)
+        {
+            slow = next(slow);
+            fast = next(next(fast));
             
         }
-        return true;
-        
-        
+        return fast == 1;
     }
 };
