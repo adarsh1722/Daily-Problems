@@ -32,7 +32,7 @@ public:
         long long el = st.top();
         st.pop();
         if(el <= mini){
-           mini = 2*mini*1LL - el; 
+           mini = (long long )2*mini - el; 
         }
         
         
