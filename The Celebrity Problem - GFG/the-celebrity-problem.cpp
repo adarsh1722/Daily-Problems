@@ -18,27 +18,43 @@ class Solution
     //Function to find if there is a celebrity in the party or not.
     int celebrity(vector<vector<int> >& M, int n) 
     {
-        int indegree[n] ={0} , outdegree[n] = {0};
+        stack<int>s;
+        int c;
         
         for(int i = 0 ; i < n ; i++){
-            
-            for(int j = 0 ; j < n ; j++){
-                
-                if(knows(i , j , M)){
-                    outdegree[i] += 1;
-                    indegree[j] += 1;
-                }
-                
-            }
-            
+            s.push(i);
         }
         
-        for(int i = 0 ; i < n ; i++){
-            if(indegree[i] == n-1 && outdegree[i] == 0){
-                return i;
+        while(s.size() > 1){
+            int A = s.top();
+            s.pop();
+            int B = s.top();
+            s.pop();
+            if(knows(A , B , M)){
+                s.push(B);
+            }
+            else{
+                s.push(A);
             }
         }
-        return -1;
+        
+        if(s.empty()) return -1;
+        
+        c = s.top();
+        s.pop();
+        
+        
+        for(int i = 0 ; i < n ; i++){
+            // if he knows any one
+            if(M[c][i] == 1){
+                return -1;
+            }
+            // if he is not known by single person other then himself
+            if(i!= c && M[i][c] == 0){
+                return -1;
+            }
+        }
+        return c;
     }
 };
 
