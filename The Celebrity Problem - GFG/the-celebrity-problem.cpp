@@ -10,56 +10,35 @@ using namespace std;
 class Solution 
 {
     public:
-    bool knows(int a, int b ,vector<vector<int> >& M )
-    {
-        return M[a][b];
+    
+    bool knows(int i , int j ,vector<vector<int> >& M ){
+        return M[i][j];
     }
- 
+    
     //Function to find if there is a celebrity in the party or not.
     int celebrity(vector<vector<int> >& M, int n) 
     {
-        stack<int>s;
-        for(int i  = 0 ; i < n ; i++)
-        {
-            s.push(i);
-        }
+        int indegree[n] ={0} , outdegree[n] = {0};
         
-        while (s.size() > 1)
-        {   int A = s.top();
-            s.pop();
-            int B = s.top();
-            s.pop();
-            if (knows(A, B , M))
-            {
-              s.push(B);
-            }
-            else
-            {
-              s.push(A);
-            }
-        }
-        if(s.empty()) return -1;
-        
-        int c = s.top();
-        s.pop();
-        
-        
-        for(int i = 0 ; i < n ; i++)
-        {
-            if(M[c][i] == 1){
+        for(int i = 0 ; i < n ; i++){
+            
+            for(int j = 0 ; j < n ; j++){
                 
-                return -1;
+                if(knows(i , j , M)){
+                    outdegree[i] += 1;
+                    indegree[j] += 1;
+                }
+                
             }
+            
         }
         
-        for(int i = 0 ; i < n  ;i++)
-        {
-            if(i != c){
-                if(M[i][c] == 0) return -1;
+        for(int i = 0 ; i < n ; i++){
+            if(indegree[i] == n-1 && outdegree[i] == 0){
+                return i;
             }
         }
-        return c;
-       
+        return -1;
     }
 };
 
