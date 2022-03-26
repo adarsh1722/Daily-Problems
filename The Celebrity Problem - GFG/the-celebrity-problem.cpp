@@ -10,39 +10,24 @@ using namespace std;
 class Solution 
 {
     public:
-    
-    bool knows(int i , int j ,vector<vector<int> >& M ){
-        return M[i][j];
-    }
-    
+
     //Function to find if there is a celebrity in the party or not.
     int celebrity(vector<vector<int> >& M, int n) 
     {
-        stack<int>s;
-        int c;
-        
-        for(int i = 0 ; i < n ; i++){
-            s.push(i);
+        int i = 0 , j = n-1;
+        // why less then j ? because atleast one person should be there
+        // for celebrity
+        while(i < j){
+            
+            if(M[j][i])
+                j--;
+            else
+               i++;
+            
         }
         
-        while(s.size() > 1){
-            int A = s.top();
-            s.pop();
-            int B = s.top();
-            s.pop();
-            if(knows(A , B , M)){
-                s.push(B);
-            }
-            else{
-                s.push(A);
-            }
-        }
-        
-        // if(s.empty()) return -1;
-        
-        c = s.top();
-        s.pop();
-        
+        // why  i ? do dry run on 0 1 2 and you will understand
+        int c = i; // assign i as candidate
         
         for(int i = 0 ; i < n ; i++){
             // if he knows any one
@@ -54,7 +39,9 @@ class Solution
                 return -1;
             }
         }
+        
         return c;
+
     }
 };
 
