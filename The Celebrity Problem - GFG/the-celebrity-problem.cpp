@@ -38,7 +38,7 @@ class Solution
             }
         }
         
-        if(s.empty()) return -1;
+        // if(s.empty()) return -1;
         
         c = s.top();
         s.pop();
@@ -49,7 +49,7 @@ class Solution
             if(M[c][i] == 1){
                 return -1;
             }
-            // if he is not known by single person other then himself
+            // if he is not known by any single person other then himself
             if(i!= c && M[i][c] == 0){
                 return -1;
             }
