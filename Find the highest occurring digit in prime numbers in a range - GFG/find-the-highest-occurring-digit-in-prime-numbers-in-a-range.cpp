@@ -27,9 +27,13 @@ class Solution {
                 while(temp > 0){
                     int rem = temp%10;
                     hashMap[rem] += 1;
-                    if(hashMap[rem] >= maxx){
-                        maxx = hashMap[rem];
+                    if(hashMap[rem] == maxx){
+                        ele = max(ele , rem);
+                        
+                    }
+                    else if(hashMap[rem] > maxx){
                         ele = rem;
+                        maxx = hashMap[rem];
                     }
                     temp= temp/10;
                 }
