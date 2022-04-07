@@ -84,21 +84,24 @@ Node* buildTree(string str)
 class Solution
 {
     public:
-    void dfs(Node* root , vector<int>&pre){
+    void inorder(Node* root , int &k , int &ans){
         
         if(!root) return;
-        pre.push_back(root->data);
-        dfs(root->left , pre);
-        dfs(root->right , pre);
+        inorder(root->right , k , ans);
+        k -= 1;
+        if(k == 0){
+            ans = root->data;
+            return;
+        }
+        inorder(root->left , k , ans);
         
     }
     
     int kthLargest(Node *root, int k)
     {
-        vector<int>pre;
-        dfs(root , pre);
-        sort(pre.rbegin() , pre.rend());
-        return pre[k-1];
+        int ans = -1;
+        inorder(root , k , ans);
+        return ans;
         
     }
 };
