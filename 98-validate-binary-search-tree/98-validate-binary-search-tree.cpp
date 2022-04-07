@@ -1,13 +1,22 @@
 
 class Solution {
 public:
-    bool isValidBSt(TreeNode* root , long long int minval , long long int maxval){
-        if(root == NULL) return true;
-        if(root->val >= maxval || root->val <= minval) return false;
-        return isValidBSt(root->left , minval , root->val) && isValidBSt(root->right , root->val , maxval);
+    bool isValidBST(TreeNode* root , long long int minVal , long long int maxVal){
+        
+        if(root == NULL){
+            return true;
+        }
+        if(root->val >= maxVal || root->val <= minVal){
+            return false;
+        }
+        
+        return isValidBST(root->left , minVal , root->val) && isValidBST(root->right , root->val , maxVal);
+        
     }
     bool isValidBST(TreeNode* root) {
-        return isValidBSt(root , LLONG_MIN , LLONG_MAX);
+        
+        
+        return isValidBST(root ,LLONG_MIN , LLONG_MAX);
+        
     }
-   
 };
