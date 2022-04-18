@@ -5,40 +5,53 @@ using namespace std;
  // } Driver Code Ends
 class Solution {
 public:
-
-    bool bipartite(int parent , int c , vector<int>adj[] , vector<int>&color){
+    bool bfs(int parent , int c , vector<int>adj[] , vector<int>&color){
         
-        color[parent] = c;
+        queue<pair<int , int>>q;
+        q.push({parent , 0});
+        color[parent] = 0;
         
-        for(auto child : adj[parent]){
+        while(!q.empty()){
             
-            if(color[child] == -1){
+            int parent = q.front().first;
+            int c = q.front().second;
+            q.pop();
+            
+            for(auto nbr: adj[parent]){
                 
-                if(bipartite(child , c^1 , adj , color) == false){
+                if(color[nbr] == -1){
+                    
+                    color[nbr] = c^1;
+                    q.push({nbr , c^1});
+                    
+                }
+                else if(color[nbr] == color[parent]){
                     return false;
                 }
                 
+                
             }
-            else if(color[child] == color[parent]) return false;
+            
             
         }
         return true;
         
         
     }
+    
 	bool isBipartite(int V, vector<int>adj[]){
-	    vector<int>color(V , -1);
+	    
+	    vector<int>color(V+1 , -1);
 	    
 	    for(int i = 0 ; i < V ; i++){
-	        if(color[i] == -1){
-	            
-	            if(bipartite(i , 0 , adj , color) == false){
-	                return false;
-	            }
-	            
+	        
+	        if(color[i] == -1 && bfs(i , 0 , adj , color) == false){
+	            return false;
 	        }
+	        
 	    }
 	    return true;
+	    
 	}
 
 };
