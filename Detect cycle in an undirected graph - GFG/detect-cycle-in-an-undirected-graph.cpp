@@ -5,41 +5,51 @@ using namespace std;
  // } Driver Code Ends
 class Solution {
   public:
-    bool cycle(int child , int parent , vector<int>adj[] , vector<int>&vis){
-        
+  
+   bool cycle(int child  , vector<int>adj[] , vector<int>&vis){
+       
+        queue<pair<int , int>>q;
+        q.push({child , -1});
         vis[child] = 1;
-        
-        for(auto nbr : adj[child]){
-            if(vis[nbr] == 0){
-                
-                if(cycle(nbr , child , adj , vis)) {
-                    return true;
-                };
-                
-            }
-            else if(nbr != parent){
-                return true;
-            }
-        }
-        return false;
-        
-    }
-    bool isCycle(int V, vector<int> adj[]) {
-         
-        vector<int>vis(V+1  , 0);
-        
-        for(int i = 0 ;i < V ; i++){
+        while(!q.empty()){
             
-            if(!vis[i]){
-                
-                if(cycle(i , -1  , adj , vis)){
+            int child = q.front().first;
+            int parent = q.front().second;
+            q.pop();
+            
+            for(auto nbr : adj[child]){
+                if(!vis[nbr]){
+                    vis[nbr] = 1;
+                    q.push({nbr , child});
+                }
+                else if(nbr != parent){
                     return true;
                 }
                 
+                
             }
             
         }
         return false;
+        
+       
+   }
+    // Function to detect cycle in an undirected graph.
+    bool isCycle(int V, vector<int> adj[]) {
+        // Code here
+        
+        vector<int>vis(V+1 , 0);
+        
+        for(int i = 0 ; i < V ; i++){
+            
+            if(!vis[i] && cycle(i , adj , vis)){
+                return true;
+            }
+            
+            
+        }
+        return false;
+        
         
     }
 };
