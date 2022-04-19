@@ -6,26 +6,30 @@ using namespace std;
 class Solution {
 public:
 	int isNegativeWeightCycle(int n, vector<vector<int>>edges){
-	    vector<int> dis(n,INT_MAX);
-	    dis[0]=0;
-	    int i,j;
+	    vector<int>dis(n , INT_MAX);
+	    dis[0] = 0;
 	    
-	    for(i=0;i<n-1;i++)
-	    {
-	        for(auto e:edges)
-	        {
-	            int u=e[0],v=e[1],d=e[2];
+	    // Do relaxation N-1 times
+	    for(int i = 1 ; i <= n-1 ; i++){
+	        
+	        for(auto it : edges){
 	            
-	            if(dis[u]!=INT_MAX && dis[u]+d<dis[v])
-	                dis[v]=dis[u]+d;
+	            int u = it[0] , v = it[1] , d = it[2];
+	            if(dis[u] != INT_MAX && dis[u] + d < dis[v]){
+	                dis[v] = dis[u] + d;
+	            }
+	            
 	        }
+	        
 	    }
 	    
-	    for(auto e:edges)
-	    {
-	        int u=e[0],v=e[1],d=e[2];
-	        if(dis[u]!=INT_MAX && dis[u]+d<dis[v])
-	        return 1;
+	    for(auto it : edges){
+	        
+	        int u = it[0] , v = it[1] , d = it[2];
+            if(dis[u] != INT_MAX && dis[u] + d < dis[v]){
+                return 1;
+            }
+	        
 	    }
 	    
 	    return 0;
