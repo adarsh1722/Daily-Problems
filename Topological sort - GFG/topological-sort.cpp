@@ -6,39 +6,43 @@ using namespace std;
 class Solution
 {
 	public:
-	
-	void dfs(int parent , vector<int>adj[] , vector<int>&vis , stack<int>&st){
-	    
-	    vis[parent] = 1;
-	    
-	    for(auto &nbr : adj[parent]){
-	        if(!vis[nbr]){
-	            dfs(nbr , adj , vis , st);
-	        }
-	    }
-	    st.push(parent);
-	    
-	}
-	
 	//Function to return list containing vertices in Topological order. 
 	vector<int> topoSort(int V, vector<int> adj[]) 
 	{
-	   
-	   vector<int>vis(V+1 , 0);
-	   stack<int>st;
-	   for(int i = 0 ; i < V ; i++){
-	       
-	       if(!vis[i]){
-	           dfs(i , adj , vis , st);
-	       }
-	       
-	   }
-	   vector<int>res;
-	   while(!st.empty()){
-	       res.push_back(st.top());
-	       st.pop();
-	   }
-	   return res;
+	    vector<int>inDegree(V);
+	    
+	    for(int i = 0 ; i < V ; i++){
+	        
+	        for(auto &nbr : adj[i]){
+	            inDegree[nbr]++;
+	        }
+	        
+	    }
+	    
+	    queue<int>q;
+	    for(int i= 0 ; i < V ; i++){
+	        if(inDegree[i] == 0){
+	            q.push(i);
+	        }
+	    }
+	    
+	    vector<int>topo;
+	    
+	    while(!q.empty()){
+	        
+	        int node = q.front();
+	        q.pop();
+	        topo.push_back(node);
+	        for(auto it : adj[node]){
+	            inDegree[it]--;
+	            if(inDegree[it] == 0){
+	                q.push(it);
+	            }
+	         }
+	        
+	    }
+	    
+	    return topo;
 	}
 };
 
