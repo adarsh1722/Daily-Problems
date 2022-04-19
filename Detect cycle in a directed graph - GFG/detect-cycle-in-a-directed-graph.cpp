@@ -27,13 +27,13 @@ class Solution {
 	        }
 	    }
 	    
-	    vector<int>topo;
+	    int cnt =0;
 	    
 	    while(!q.empty()){
 	        
 	        int node = q.front();
 	        q.pop();
-	        topo.push_back(node);
+	       cnt++;
 	        for(auto it : adj[node]){
 	            inDegree[it]--;
 	            if(inDegree[it] == 0){
@@ -43,7 +43,7 @@ class Solution {
 	        
 	    }
 	    
-	    return !(topo.size() == V);
+	    return !(cnt == V);
 
     }
 };
