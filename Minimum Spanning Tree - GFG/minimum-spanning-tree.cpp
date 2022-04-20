@@ -25,24 +25,24 @@ class Solution
         for(int i = 0 ; i  < V ; i++){
             key[i] = INT_MAX;
             mst[i] = false;
-            parent[i] = -1;
+           
         }
+        priority_queue<pair<int , int> , vector<pair<int ,int>> , greater<pair<int ,int>>>pq;
+        // pq is - {weight  , node}
         
         key[0] = 0;
+        parent[0] = -1;
+        
+        
+        pq.push({0 , 0});
         
         // looping through N-1 times so that we dont form the 
         // cycle
-        for(int i  = 0 ; i < V - 1 ; i++){
+        while(!pq.empty()){
             
-            // finding out the minimum edge node
-            int mini = INT_MAX , u;
-            for(int v = 0 ; v < V ; v++){
-                if(mst[v] == false && key[v] < mini){
-                    mini = key[v];
-                    u = v;
-                }
-            }
-            
+           int u = pq.top().second;
+           pq.pop();
+           
             // it means now the uth node is now my part of the 
             // mst tree
             mst[u] = true;
@@ -60,6 +60,7 @@ class Solution
                 if(mst[v] == false && weight < key[v]){
                     parent[v] = u;
                     key[v] = weight;
+                    pq.push({key[v] , v});
                 }
                 
             }
