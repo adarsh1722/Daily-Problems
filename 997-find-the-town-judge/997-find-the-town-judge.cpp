@@ -13,7 +13,16 @@ public:
             indegree[x[0]]--;
             indegree[x[1]]++;
         }
-        
+        int  count = 0;
+        for(int i  = 1 ; i <= n ; i++){
+            if(indegree[i] == n-1){
+                count++;
+            }
+            
+        }
+        if(count > 1){
+            return -1;
+        }
         for(int i  = 1 ; i<= n ; i++)
         {
             if(indegree[i] == n-1)
