@@ -1,23 +1,28 @@
 class Solution {
 public:
-
+    int maxSum(int idx , vector<int>&nums , vector<int>&dp){
+        
+        if(idx == 0){
+            return nums[0];
+        }
+        if(idx < 0){
+            return 0;
+        }
+        if(dp[idx] != -1){
+            return dp[idx];
+        }
+        int pick = nums[idx] + maxSum(idx-2  , nums, dp);
+        int notPick = 0 + maxSum(idx-1 , nums , dp);
+        
+        return dp[idx] = max(pick , notPick);
+        
+        
+    }
     int rob(vector<int>& nums) {
         
         int n = nums.size();
-        vector<int>dp(n ,0);
-        int prev2 = 0 , prev = nums[0];
-        for(int i = 1 ; i < n ; i++)
-        {
-            int take = nums[i];
-            if(i > 1) take += prev2;
-            int notTake = 0 + prev;
-            
-            int curi = max(take ,notTake);
-            prev2 = prev;
-            prev = curi;
-        }
-        return prev;
-        
+        vector<int>dp(n , -1);
+        return maxSum(n-1 , nums ,dp);
         
     }
 };
