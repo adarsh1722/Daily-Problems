@@ -1,28 +1,31 @@
 class Solution {
 public:
-   int minimumElementsUtil(vector<int>& arr, int ind, int T, vector<vector<int>>& dp){
-
-    if(ind == 0){
-        if(T%arr[0] == 0) return T/arr[0];
-        else return 1e9;
+    int minimumCoins(int ind , vector<int>&coins , vector<vector<int>>&dp , int target){
+        
+        if(ind == 0){
+            if(target%coins[0] == 0){
+                return target/coins[0];
+            }
+            else {
+                return 1e9;
+            }
+            
+            
+        }
+        if(dp[ind][target] != -1) return  dp[ind][target];
+        int notTake = 0 + minimumCoins(ind-1 , coins , dp , target);
+        int take = INT_MAX;
+        if(coins[ind] <= target){
+            take =  1 + minimumCoins(ind , coins , dp , target - coins[ind]);
+        }
+        
+        return dp[ind][target] = min(take ,notTake);
     }
-    
-    if(dp[ind][T]!=-1)
-        return dp[ind][T];
+    int coinChange(vector<int>& coins, int amount) {
         
-    int notTaken = 0 + minimumElementsUtil(arr,ind-1,T,dp);
-    
-    int taken = 1e9;
-    if(arr[ind] <= T)
-        taken = 1 + minimumElementsUtil(arr,ind,T-arr[ind],dp);
-        
-     return dp[ind][T] = min(notTaken,taken);
-   }
-    int coinChange(vector<int>& arr, int T) {
-        
-        int n = arr.size();
-        vector<vector<int>>dp(n , vector<int>(T+1  , -1));
-        int ans =  minimumElementsUtil(arr, n-1, T, dp);
+        int n = coins.size();
+        vector<vector<int>>dp(n , vector<int>(amount+1  , -1));
+        int ans = minimumCoins(n-1 , coins , dp , amount);
         if(ans >= 1e9) return -1;
         return ans;
         
