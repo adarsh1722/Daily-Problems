@@ -1,37 +1,28 @@
 class Solution {
 public:
-    vector<vector<int>>res;
-    void f(int start , int end , int n , int k , vector<int> contri)
-    {
-        // Base Case
-        // positive base case
-        if( n == 0 && k == 0)
-        {
-            res.push_back(contri);
+    void get(int start , int end , int k , int n , vector<vector<int>>&ans , vector<int>&ds){
+        if(n==0 && k == 0 ){
+            ans.push_back(ds);
             return;
         }
-        if(n == 0 || k == 0 || n < 0)
-        {
-            return ;
+        
+        if(start > end){
+            return;
         }
         
-        if(start > end)
-            return ;
         
+        // 1. pick
+        ds.push_back(start);
+        get(start+1 , end , k-1 , n-start ,ans , ds);
+        ds.pop_back();
+        get(start+1 , end , k , n , ans , ds);
         
-        
-        // Recursive Step
-        // c1
-        f(start + 1 , end , n , k , contri);
-        
-        // c2
-        contri.push_back(start);
-        f(start + 1 , end , n-start , k - 1, contri );
     }
     vector<vector<int>> combinationSum3(int k, int n) {
         
-        f(1 , 9 ,  n , k  , {});
-        return res;
-        
+        vector<vector<int>>ans;
+        vector<int>ds;
+        get(1, 9 , k , n , ans , ds);
+        return ans;
     }
 };
