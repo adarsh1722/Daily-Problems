@@ -1,16 +1,20 @@
 
 class Solution {
 public:
-    
-        
+            
     void fun(TreeNode* root,vector<string>&v,string s){
-        if(root->left==NULL && root->right==NULL){
+        if(!root){
+            return;
+        }
+        if(root->left == NULL && root->right == NULL){
             reverse(s.begin(),s.end());
             v.push_back(s);
+            return ;
         }
-        if(root->left) fun(root->left , v , s+ string(1 , 'a' + root->left->val));
-        if(root->right)fun(root->right, v , s + string(1 , 'a' + root->right->val));
+        if(root->left)  fun(root->left , v , s + string(1 , 'a' + root->left->val));
+        if(root->right) fun(root->right, v , s + string(1 , 'a' + root->right->val));
     }
+    
     string smallestFromLeaf(TreeNode* root) {
         vector<string>v;
         if(root==NULL) return "";
