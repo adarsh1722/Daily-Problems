@@ -11,18 +11,20 @@
  */
 class Solution {
 public:
-    int sum = 0;
-    void helper(TreeNode* r , TreeNode* parent , TreeNode* gp){
-        if(!r) return;
+    
+    int  helper(TreeNode* r , TreeNode* parent , TreeNode* gp){
+        int sum = 0;
+        if(!r) return 0 ;
         if(gp != NULL && gp->val%2 == 0){
             sum += r->val;
         }
-        helper(r->left , r  , parent);
-        helper(r->right , r , parent);
+        sum  += helper(r->left , r  , parent);
+        sum += helper(r->right , r , parent);
+        return sum;
     }
     int sumEvenGrandparent(TreeNode* root) {
-        helper(root , NULL , NULL);
-        return sum;
+        return helper(root , NULL , NULL);
+        
     }
     
 };
