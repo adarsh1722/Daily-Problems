@@ -19,7 +19,7 @@ public:
             dp[n-1][j] = arr[n-1][j];
         } 
         for(int i = n-2 ;i >= 0 ; i--){
-            for(int j = i ; j >= 0 ; j--){
+            for(int j = 0 ; j <= i ; j++){
                 int d = arr[i][j] + dp[i+1][j];
                 int dig = arr[i][j] + dp[i+1][j+1];
                 dp[i][j] = min(d , dig);
