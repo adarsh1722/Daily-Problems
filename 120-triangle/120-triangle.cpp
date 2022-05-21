@@ -14,6 +14,19 @@ public:
         
         int n = arr.size();
         vector<vector<int>>dp(n , vector<int>(n ,-1));
-        return f(0 , 0 , arr , dp);
+         
+        for(int j = 0 ; j < n ; j++){
+            dp[n-1][j] = arr[n-1][j];
+        } 
+        for(int i = n-2 ;i >= 0 ; i--){
+            for(int j = i ; j >= 0 ; j--){
+                int d = arr[i][j] + dp[i+1][j];
+                int dig = arr[i][j] + dp[i+1][j+1];
+                dp[i][j] = min(d , dig);
+            }
+        }
+        return dp[0][0];
+         
+        
     }
 };
