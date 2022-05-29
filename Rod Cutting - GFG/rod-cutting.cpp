@@ -28,8 +28,27 @@ class Solution{
     int cutRod(int price[], int n) {
         
         vector<vector<int>>dp(n , vector<int>(n+1 , -1));
-        return f(n-1 , n , price , dp);
+        for(int i = 0 ; i <= n ; i++){
+            dp[0][i] = i*price[0];
+            
+        }
+        
+        for(int ind = 1 ; ind < n ; ind++){
+            for(int N = 0 ; N <= n ; N++ ){
+                int notpick = 0 + dp[ind-1][N];
+                int pick = INT_MIN;
+                int rodlength = ind+1;
+                if(rodlength <= N){
+                    pick = price[ind] + dp[ind][N - rodlength];
+                }
+                
+                dp[ind][N] = max(pick , notpick);
+        
+            }
+        }
+        return dp[n-1][n];
     }
+    
 };
 
 // { Driver Code Starts.
