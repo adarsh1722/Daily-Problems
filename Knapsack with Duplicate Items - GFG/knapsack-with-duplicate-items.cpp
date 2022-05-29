@@ -10,6 +10,7 @@ using namespace std;
 class Solution{
 public:
     int f(int i , int w , int val[] , int wt[], vector<vector<int>>&dp ){
+        
         if(i == 0){
             return (w/wt[0])*val[0];
            
@@ -26,6 +27,22 @@ public:
     {
         vector<vector<int>>dp(N , vector<int>(W+1 , -1));
         return f(N-1 , W ,val , wt , dp);
+        
+        for(int w = 0 ; w <= W ;w++){
+            dp[0][w] = (w / wt[0])*val[0];
+        }
+        
+        for(int i = 1 ; i< N ; i++){
+            for(int w = 0 ; w <= W ; w++){
+                int notpick = 0 + dp[i-1][w];
+                int pick = INT_MIN;
+                if(wt[i] <= w){
+                    pick = val[i] + dp[i][w];
+                }
+                dp[i][w] = max(pick , notpick);
+            }
+        }
+        return dp[N-1][W];
     }
 };
 
