@@ -7,25 +7,30 @@ using namespace std;
 class Solution
 {
     public:
-    int f(int i  , int w , int wt[] , int val[] ,vector<vector<int>>&dp){
-        if(i == 0){
-            if(wt[0] <= w) return val[0];
-            else return 0;
-        }
-        if(dp[i][w] != -1) return dp[i][w];
-        int notpick = 0 + f(i-1 , w , wt , val , dp);
-        int pick = INT_MIN;
-        if(wt[i] <= w){
-            pick = val[i] + f(i-1  , w - wt[i]  , wt ,val , dp);
-            
-        }
-        return dp[i][w] =  max(pick , notpick);
-    }
     //Function to return max value that can be put in knapsack of capacity W.
     int knapSack(int W, int wt[], int val[], int n) 
     { 
-       vector<vector<int>>dp(n , vector<int>(W+1 , -1));
-       return f(n-1 , W , wt , val , dp);
+       vector<vector<int>>dp(n , vector<int>(W+1 , 0));
+       for(int i =  wt[0] ; i <= W ; i++){
+           dp[0][i] = val[0];
+       }
+       
+       for(int ind = 1 ; ind < n ; ind++){
+           for(int cap = 0 ; cap <= W ; cap++){
+               int nottaken = 0 + dp[ind-1][cap];
+               
+               int taken = INT_MIN;
+               if(wt[ind] <= cap){
+                   taken = val[ind] + dp[ind-1][cap-wt[ind]];
+                   
+                  
+               }
+               
+               dp[ind][cap] = max(nottaken , taken);
+           }
+       }
+       
+       return dp[n-1][W];
     }
 };
 
