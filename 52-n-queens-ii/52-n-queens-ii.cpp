@@ -29,9 +29,9 @@ public:
         
         
     }
-    void solve(int col , vector<string>&board , vector<vector<string>>&ans , int n) {
+    void solve(int col , vector<string>&board , set<vector<string>>&ans , int n) {
         if(col == n){
-            ans.push_back(board);
+            ans.insert(board);
             return ;
         }
         for(int row = 0 ; row  < n ; row++){
@@ -46,18 +46,15 @@ public:
     }
     int totalNQueens(int n) {
         
-        vector<vector<string>>ans;
+        set<vector<string>>ans;
         vector<string>board(n);
         string s(n , '.');
         for(int i = 0 ; i < n ; i++){
             board[i] = s;
         }
         solve(0  , board , ans , n);
-        set<vector<string>>st;
-        for(auto x : ans){
-            st.insert(x);
-        }
-        return st.size();
+        
+        return ans.size();
         
         
     }
