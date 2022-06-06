@@ -11,36 +11,16 @@
  */
 class Solution {
 public:
+    void traverse(TreeNode*root , int leaf , int &sum){
+        if(!root) return;
+        if(!root->left && !root->right && leaf == 0) sum += root->val;
+        traverse(root->left  , 0 , sum);
+        traverse(root->right , 1 , sum);
+    }
     int sumOfLeftLeaves(TreeNode* root) {
         
-        if(!root){
-            return 0;
-        }
-        
         int sum = 0;
-        queue<pair<TreeNode* , int>>q;
-        q.push({root , -1});
-        while(!q.empty()){
-            int n = q.size();
-            for(int i = 1 ; i <= n ; i++){
-                 auto p = q.front();
-                 q.pop();
-                 auto node = p.first;
-                 int leaf = p.second;
-                 if(leaf == 0 && !node->left && !node->right){
-                     sum += node->val;
-                 }
-                 if(node->left){
-                     q.push({node->left , 0});
-                 }
-                 if(node->right){
-                     q.push({node->right , 1});
-                 }
-                
-            }
-                
-        }
-        return sum;
-        
+        traverse(root ,-1 ,  sum);
+        return sum; 
     }
 };
