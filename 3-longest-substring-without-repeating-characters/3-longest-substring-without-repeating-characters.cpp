@@ -1,27 +1,24 @@
 class Solution {
 public:
-    int lengthOfLongestSubstring(string str) {
+    int lengthOfLongestSubstring(string s) {
         
-        int n = str.size();
-        int res = 0;
-
-        for (int i = 0; i < n; i++) {
-            
-            vector<bool> visited(256);  
-
-            for (int j = i; j < n; j++) {
-                
-                if (visited[str[j]] == true)
+        int n = s.size() , maxLen = 0;
+        for(int i = 0 ; i  < n ; i++){
+            set<char>st;
+            int len = 0;
+            for(int j = i ; j < n ; j++){
+                if(st.find(s[j]) != st.end()){
                     break;
-
-                else {
-                    res = max(res, j - i + 1);
-                    visited[str[j]] = true;
                 }
+                len++;
+                maxLen = max(maxLen , len);
+                st.insert(s[j]);
+                
             }
-           
+            
         }
-        return res;
-
+        
+        return maxLen;
+        
     }
 };
