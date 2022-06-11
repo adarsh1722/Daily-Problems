@@ -111,28 +111,27 @@ int main() {
 // } Driver Code Ends
 
 
-void recursion(Node* root , int level , vector<int>&left){
-    
-    if(root == NULL){
-        return ;
-    }
-    if(level == left.size()){
-        left.push_back(root->data);
-    }
-    
-    recursion(root->left  , level+1 , left);
-    recursion(root->right , level+1 , left);
-    
-}
 
-//Function to return a list containing elements of left view of the binary tree.
+
 vector<int> leftView(Node *root)
 {
-    vector<int>left;
-    if(!root){
-        return left;
-    }
-    int level = 0;
-    recursion(root , level, left);
-    return left;
+   vector<int>ans;
+   if(!root){
+       return ans;
+   }
+   queue<Node* >q;
+   q.push(root);
+   while(!q.empty()){
+       int n = q.size();
+       for(int i = 0 ; i < n ; i++){
+           Node* temp = q.front();
+           q.pop();
+           if(i == 0){
+               ans.push_back(temp->data);
+           }
+           if(temp->left)q.push(temp->left);
+           if(temp->right)q.push(temp->right);
+       }
+   }
+   return ans;
 }
