@@ -2,15 +2,18 @@ class Solution {
 public:
     vector<int> getRow(int n) {
         
-        vector<vector<int>>dp(n+1);
-        for(int i = 0 ; i < n+1 ; i++){
-            dp[i].resize(i+1);
-            dp[i][0] = dp[i][i] = 1;
+        vector<int>prev , curr;
+        prev.resize(1);
+        prev[0] = 1;
+        for(int i = 1 ; i < n+1 ; i++){
+            curr.resize(i+1);
+            curr[0] = curr[i] = 1;
             for(int j = 1 ; j < i ; j++){
-                dp[i][j]  = dp[i-1][j-1] + dp[i-1][j];
+                curr[j]  = prev[j-1] + prev[j];
             }
+            prev = curr;
         }
-        return dp[n];
+        return prev;
         
     }
 };
