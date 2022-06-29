@@ -1,20 +1,23 @@
 
 class Solution {
 public:
-    int h(TreeNode* t){
-        return t == NULL ? 0 : 1 + max(h(t->left) , h(t->right));
+    int f(TreeNode* root){
+        if(!root) return 0;
+        
+        int lh = f(root->left);
+        int rh = f(root->right);
+        
+        if(abs(lh - rh) > 1){
+            return 1e9;
+        }
+        
+        return 1 + max(lh , rh);
+        
     }
     bool isBalanced(TreeNode* root) {
         
-        if(!root) return true;
         
-        if(abs(h(root->left) - h(root->right)) > 1){
-            return false;
-        }
-        
-        int left = isBalanced(root->left);
-        int right = isBalanced(root->right);
-        return left && right;
+        return f(root) >= 1e9 ? false : true;
         
     }
 };
