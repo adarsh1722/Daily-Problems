@@ -1,13 +1,11 @@
 
 class Solution {
-private : 
-    TreeNode* prev = NULL;
 public:
-   
+    TreeNode* prev = NULL;
     void flatten(TreeNode* root) {
         
         if(!root){
-            return;
+            return ;
         }
         
         flatten(root->right);
@@ -15,6 +13,8 @@ public:
         root->right = prev;
         root->left = NULL;
         prev = root;
+        
+        
         
     }
 };
