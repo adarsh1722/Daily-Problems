@@ -8,58 +8,59 @@ using namespace std;
 class Solution
 {
 	public:
-	void dfs(int parent , vector<int>adj[] , vector<int>&vis ,stack<int>&st){
-	    vis[parent] = 1;
-	    for(auto nbr :adj[parent]){
-	        if(!vis[nbr]){
-	            dfs(nbr , adj , vis ,st);
+	void dfs(int node  , vector<int>adj[] , vector<int>&vis , stack<int>&st){
+	    vis[node] = 1;
+	    for(auto nbr: adj[node]){
+	        if(vis[nbr] == 0){
+	            dfs(nbr , adj , vis , st);
 	        }
 	    }
-	    st.push(parent);
+	    st.push(node);
 	}
-	void dfs2(int parent , vector<int>transpose[] , vector<int>&vis ){
-	    vis[parent] = 1;
-	    for(auto nbr :transpose[parent]){
+	void dfs2(int node , vector<int>adj[] , vector<int>&vis){
+	    vis[node] = 1;
+	    for(auto nbr : adj[node]){
 	        if(!vis[nbr]){
-	            dfs2(nbr , transpose , vis);
+	            dfs2(nbr , adj , vis);
 	        }
 	    }
-	   
 	}
-	
 	//Function to find number of strongly connected components in the graph.
     int kosaraju(int V, vector<int> adj[])
     {
-       stack<int>st;
-       vector<int>vis(V);
-       // find topo sort
-       for(int i = 0 ; i < V ; i++){
-           if(!vis[i]){
-               dfs(i , adj , vis ,st);
-               
-           }
-       }
+        //code here
        
-       // reverse the edges
-       vector<int>transpose[V];
-       for(int i = 0 ; i < V ; i++){
-           vis[i] = 0;
-           for(auto nbr : adj[i]){
-               transpose[nbr].push_back(i);
-           }
-       }
-       
-       int SCC = 0;
-       while(!st.empty()){
-           int curr = st.top();
-           st.pop();
-           if(vis[curr] == 0){
-               dfs2(curr , transpose , vis);
-               SCC++;
-           }
-           
-       }
-       return SCC;
+        // 1. Do toposort
+        stack<int>st;
+        vector<int>vis(V);
+        
+        for(int i = 0 ; i < V ; i++){
+            if(!vis[i]){
+                dfs(i , adj , vis , st);
+            }
+        }
+        
+        // 2. reverse edges
+        vector<int>transpose[V];
+        
+        for(int i = 0 ; i < V ; i++){
+            vis[i] = 0;
+            for(auto child : adj[i]){
+                transpose[child].push_back(i);
+            }
+        }
+        
+        //3. do dfs
+        int SCC = 0;
+        while(!st.empty()){
+            int curr  = st.top();
+            st.pop();
+            if(vis[curr] == 0){
+                dfs2(curr , transpose , vis);
+                SCC++;
+            }
+        }
+        return SCC;
     }
 };
 
