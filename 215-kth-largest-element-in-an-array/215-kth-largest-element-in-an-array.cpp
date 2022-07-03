@@ -3,13 +3,16 @@ public:
     int findKthLargest(vector<int>& nums, int k) {
         
         int n = nums.size();
-        priority_queue<int , vector<int> , greater<int>>minHeap;
-        for(auto x : nums){
-            minHeap.push(x);
-            if(minHeap.size() > k) minHeap.pop();
+        
+        priority_queue<int , vector<int> , greater<int>>pq;
+        
+        for(int i = 0 ; i < n ; i++){
+            pq.push(nums[i]);
+            if(pq.size() > k){
+                pq.pop();
+            }
         }
-       
-        return minHeap.top();
+        return pq.top();
         
     }
 };
