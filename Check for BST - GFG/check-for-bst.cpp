@@ -22,23 +22,24 @@ struct Node {
 class Solution
 {
     public:
-    //Function to check whether a Binary Tree is BST or not.
-    
-    void inorder(Node* root , vector<int>&in){
-    
-        if(!root) return;
-        inorder(root->left , in);
-        in.push_back(root->data);
-        inorder(root->right , in);
+    bool check(Node* root , int minVal , int maxVal){
+        if(!root){
+            return true;
+        }
+        
+        if(root->data <= minVal || root->data >= maxVal){
+          return false;
+        }
+        return check(root->left , minVal , root->data) && check(root->right , root->data  , maxVal);
     }
-    
     bool isBST(Node* root) 
     {
-        vector<int>in;
-        inorder(root , in);
+        if(!root){
+            return true;
+        }
         
-        bool ans = is_sorted(in.begin() , in.end());
-        return ans;
+        return check(root , -1e9 , 1e9);
+        
     }
 };
 
