@@ -93,22 +93,26 @@ struct Node {
 
 class Solution {
   public:
-    void inorder(Node* root , int k , int &cnt , int &ans){
-        if(!root ) return;
+    void search(Node* root  , int &ans , int &k){
+        if(!root) return;
         
-        inorder(root->left , k ,cnt , ans);
-        if(++cnt == k){
+        search(root->left , ans , k);
+        k -= 1;
+        if(k == 0){
             ans = root->data;
             return;
         }
-        inorder(root->right , k , cnt , ans);
+        search(root->right , ans , k);
         
     }
     // Return the Kth smallest element in the given BST
     int KthSmallestElement(Node *root, int k) {
-        int ans = -1 , cnt = 0;
-        inorder(root , k , cnt , ans);
-        return ans;
+        // add code here.
+        
+       int ans = -1;
+       search(root , ans, k);
+       return ans;
+        
     }
 };
 
