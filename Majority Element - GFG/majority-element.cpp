@@ -15,38 +15,23 @@ class Solution{
     // size: size of input array
     int majorityElement(int a[], int size)
     {
-        // using boyer moore algorithm
-        
-        int candidate = -1 , cnt = 0;
-        
-        for(int i = 0 ; i < size ; i++)
-        {
-            if(a[i] == candidate)
-            {
-                cnt++;
-            }
-            else if(cnt == 0)
-            {
-                candidate = a[i];
-                cnt = 1;
-            }
-            else
-            {
-                cnt-=1;
-            }
-        }
-        
-        cnt = 0;
-        for(int i = 0 ; i < size ; i++)
-        {
-            if(a[i] == candidate)
-            cnt++;
-        }
-        
-        
-        return cnt > size/2 ? candidate : -1;
-      
-        
+       
+       int cand = -1 , count = 0;
+       for(int i = 0 ; i < size  ; i++){
+           if(count == 0){
+               cand = a[i];
+               count++;
+               continue;
+           }
+           count += (cand == a[i] ? 1 : -1);
+       }
+       
+       int check = 0;
+       for(int i  = 0 ; i < size ; i++){
+           if(a[i] == cand) check++;
+       }
+       return check > size/2 ? cand : -1;
+       
         
         
     }
