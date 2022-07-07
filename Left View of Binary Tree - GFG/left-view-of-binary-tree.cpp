@@ -111,27 +111,41 @@ int main() {
 // } Driver Code Ends
 
 
+/* A binary tree node
 
+struct Node
+{
+    int data;
+    struct Node* left;
+    struct Node* right;
+    
+    Node(int x){
+        data = x;
+        left = right = NULL;
+    }
+};
+ */
 
+void solve(Node* root , vector<int>&ans , int level){
+    if(!root){
+        return ;
+    }
+    if(ans.size() == level){
+        ans.push_back(root->data);
+    }
+    solve(root->left , ans , level + 1);
+    solve(root->right , ans , level+1);
+    
+    
+}
+
+//Function to return a list containing elements of left view of the binary tree.
 vector<int> leftView(Node *root)
 {
    vector<int>ans;
    if(!root){
        return ans;
    }
-   queue<Node* >q;
-   q.push(root);
-   while(!q.empty()){
-       int n = q.size();
-       for(int i = 0 ; i < n ; i++){
-           Node* temp = q.front();
-           q.pop();
-           if(i == 0){
-               ans.push_back(temp->data);
-           }
-           if(temp->left)q.push(temp->left);
-           if(temp->right)q.push(temp->right);
-       }
-   }
+   solve(root ,ans , 0);
    return ans;
 }
