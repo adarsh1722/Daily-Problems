@@ -22,38 +22,47 @@ Node* newNode(int val)
 
 
  // } Driver Code Ends
+/* A binary tree node has data, pointer to left child
+   and a pointer to right child 
+struct Node
+{
+    int data;
+    struct Node* left;
+    struct Node* right;
+    
+    Node(int x){
+        data = x;
+        left = right = NULL;
+    }
+}; */
 
+// Should return  right view of tree
 class Solution
 {
     public:
+    void solve(Node* root , vector<int>&ans , int level){
+        if(!root){
+            return ;
+        }
+        if(ans.size() == level){
+            ans.push_back(root->data);
+        }
+        solve(root->right , ans , level + 1);
+        solve(root->left , ans , level+1);
+        
     
-    void recursion(Node* root , int level , vector<int>&left){
-    
-    if(root == NULL){
-        return ;
     }
-    if(level == left.size()){
-        left.push_back(root->data);
+    //Function to return list containing elements of right view of binary tree.
+    vector<int> rightView(Node *root)
+    {
+       // Your Code here
+       vector<int>ans;
+       if(!root){
+           return ans;
+       }
+       solve(root , ans , 0);
+       return ans;
     }
-    recursion(root->right , level+1 , left);    
-    recursion(root->left  , level+1 , left);
-
-    
-}
-
-//Function to return a list containing elements of left view of the binary tree.
-vector<int> rightView(Node *root)
-{
-    vector<int>left;
-    if(!root){
-        return left;
-    }
-    int level = 0;
-    recursion(root , level, left);
-    return left;
-}
-    
-   
 };
 
 
