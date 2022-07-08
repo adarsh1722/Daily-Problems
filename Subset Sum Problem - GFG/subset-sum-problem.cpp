@@ -9,28 +9,30 @@ using namespace std;
 
 class Solution{   
 public:
-    bool f(int ind , vector<int>&arr , vector<vector<int>>&dp , int sum){
-        if(sum == 0){
-            return true;
+    int solve(int i , vector<int>&arr , int sum , vector<vector<int>>&dp){
+        
+        if(sum == 0) return true;
+        if(i == 0 ){
+            return arr[0] == sum;
         }
+        if(dp[i][sum] != -1) return dp[i][sum];
         
-        if(ind == 0) return arr[ind] == sum;
+        int notPick = solve(i-1  , arr , sum , dp);
         
-        if(dp[ind][sum] != -1) return dp[ind][sum];
+        int pick = false;
+        if(arr[i] <= sum)
+            pick = solve(i-1 , arr , sum- arr[i] , dp);
         
-        bool nottake = f(ind-1 , arr , dp , sum);
-        bool take = false;
-        if(sum >= arr[ind])
-           take = f(ind-1 , arr , dp , sum - arr[ind]);
-        
-        return dp[ind][sum] = take || nottake;
+        return dp[i][sum] = pick || notPick;
         
     }
     bool isSubsetSum(vector<int>arr, int sum){
+       
+       int n = arr.size();
+       vector<vector<int>>dp(n , vector<int>(sum+1 , -1));
+       return solve(n-1 , arr , sum , dp);
         
-        int n = arr.size();
-        vector<vector<int>>dp(n , vector<int>(sum+1 , -1));
-        return f(n-1 , arr ,dp , sum);
+        
     }
 };
 
