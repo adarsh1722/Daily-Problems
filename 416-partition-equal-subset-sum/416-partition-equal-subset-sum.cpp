@@ -26,8 +26,29 @@ public:
         if(sum&1) return false;
         int n = nums.size();
         int target = (sum)/2;
-        vector<vector<int>>dp(n , vector<int>(target+1 ,-1));
-        return solve(n-1  , nums ,dp , target);
+        vector<vector<int>>dp(n , vector<int>(target+1 , 0));
+        
+        for(int i = 0 ; i < n ;i++){
+            dp[i][0] = true;
+        }
+        // int target = sum/2;
+        if(nums[0] <= target){
+            dp[0][nums[0]] = true;
+        }
+        
+        for(int ind = 1 ; ind < n ; ind++){
+            for(int target = 1 ; target <= sum/2 ; target++ ){
+                    int notPick = dp[ind-1][target];
+                    int pick = false;
+                    if(target >=  nums[ind]){
+                        pick = dp[ind-1][target - nums[ind]];
+                    }
+
+                    dp[ind][target] = pick || notPick;
+            }
+        }
+        return dp[n-1][target];
+        
         
         
         
