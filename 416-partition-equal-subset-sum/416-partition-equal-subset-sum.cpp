@@ -1,42 +1,36 @@
 class Solution {
 public:
-    bool canPartition(int n  , vector<int>&arr){
-        int totSum = 0 ;
-        for(auto x : arr)
-            totSum += x;
+    bool solve(int ind  , vector<int>&nums , vector<vector<int>>&dp ,  int  target){
         
-        if(totSum %2 == 1) return false;
-         else{
-        int k = totSum/2;
-        vector<vector<bool>> dp(n,vector<bool>(k+1,false));
-    
-        for(int i=0; i<n; i++){
-            dp[i][0] = true;
+        if(target == 0) return true;
+        if(ind == 0){
+            return nums[ind] == target;
+        }
+        if(dp[ind][target] != -1) return dp[ind][target];
+        int notPick = solve(ind-1 , nums , dp , target);
+        int pick = false;
+        if(target >=  nums[ind]){
+            pick = solve(ind - 1 , nums , dp , target - nums[ind]);
         }
         
-        if(arr[0]<=k)
-            dp[0][arr[0]] = true;
+        return dp[ind][target] = pick || notPick;
         
-        for(int ind = 1; ind<n; ind++){
-            for(int target= 1; target<=k; target++){
-                
-                bool notTaken = dp[ind-1][target];
         
-                bool taken = false;
-                    if(arr[ind]<=target)
-                        taken = dp[ind-1][target-arr[ind]];
-            
-                dp[ind][target]= notTaken||taken;
-            }
-        }
-        
-        return dp[n-1][k];
-
-    } 
     }
     bool canPartition(vector<int>& nums) {
         
-       int n = nums.size();
-       return canPartition(n , nums);
+        int sum = 0 ;
+        for(auto x : nums){
+            sum += x;
+        }
+        if(sum&1) return false;
+        int n = nums.size();
+        int target = (sum)/2;
+        vector<vector<int>>dp(n , vector<int>(target+1 ,-1));
+        return solve(n-1  , nums ,dp , target);
+        
+        
+        
+        
     }
 };
