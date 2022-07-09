@@ -7,34 +7,28 @@ using namespace std;
 class Solution
 {
     public:
+    int solve(int ind , int wt[] , int val[] , int W  , vector<vector<int>>&dp){
+        
+        if(ind == 0){
+            if(wt[0] <= W) return val[0];
+            return 0;
+        }
+        if(dp[ind][W] != -1) return dp[ind][W];
+        int notTake = 0 + solve(ind-1 , wt , val, W , dp);
+        int take = INT_MIN;
+        if(wt[ind] <= W){
+            take = val[ind] + solve(ind -1 , wt , val , W - wt[ind] , dp);
+        }
+        
+        return dp[ind][W] = max(take , notTake);
+        
+        
+    }
     //Function to return max value that can be put in knapsack of capacity W.
     int knapSack(int W, int wt[], int val[], int n) 
     { 
-       
-       vector<int>prev(W+1 , 0);
-       for(int i =  wt[0] ; i <= W ; i++){
-           prev[i] = val[0];
-       }
-       
-       for(int ind = 1 ; ind < n ; ind++){
-           vector<int>cur(W+1,0);
-           
-           for(int cap = 0 ; cap <= W ; cap++){
-               int nottaken = 0 + prev[cap];
-               
-               int taken = INT_MIN;
-               if(wt[ind] <= cap){
-                   taken = val[ind] + prev[cap-wt[ind]];
-                   
-                  
-               }
-               
-               cur[cap] = max(nottaken , taken);
-           }
-           prev = cur;
-       }
-       
-       return prev[W];
+        vector<vector<int>>dp(n , vector<int>(W+1  , -1));
+        return solve(n - 1 , wt  , val , W , dp);
     }
 };
 
