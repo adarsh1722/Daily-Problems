@@ -12,22 +12,17 @@ class Solution{
 public:
     //Function to partition the array around the range such 
     //that array is divided into three parts.
-    void threeWayPartition(vector<int>& a,int A, int b)
+    void threeWayPartition(vector<int>& array,int a, int b)
     {
-        // code here 
-       int n = a.size();
-       int low=0 , mid , high=n-1;
-       mid = 0;
-       while(mid <= high)
-       {
-           if(a[mid] < A)
-           swap(a[low++], a[mid++]);
-           else if(a[mid] >= A && a[mid] <= b)
-           mid++;
-           else
-           swap(a[mid] , a[high--]);
-       }
+        int n = array.size();
+        int low = 0 , high = n - 1 , mid = 0; 
         
+        while(mid <= high){
+            
+            if(array[mid] < a)swap(array[low++] , array[mid++]);
+            else if(array[mid] >= a && array[mid] <= b)mid++;
+            else swap(array[mid] , array[high--]);
+        }
     }
 };
 
