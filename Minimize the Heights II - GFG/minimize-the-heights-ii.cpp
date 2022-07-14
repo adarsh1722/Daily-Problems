@@ -10,6 +10,7 @@ using namespace std;
 class Solution {
   public:
     int getMinDiff(int arr[], int n, int k) {
+        // code here
         
         sort(arr , arr + n);
         
@@ -29,7 +30,6 @@ class Solution {
             ans = min(ans , ma - mi);
         }
         return ans;
-        
         
     }
 };
