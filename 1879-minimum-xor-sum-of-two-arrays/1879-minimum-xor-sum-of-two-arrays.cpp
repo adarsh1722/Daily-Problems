@@ -1,32 +1,48 @@
 class Solution {
-private:
-    int countSetBits(int mask){
-        int count=0;
-        while(mask!=0){
-            count += mask&1;
-            mask/=2;
-        }
-        return count;
-    }
 public:
-    int minimumXORSum(vector<int>& n1, vector<int>& n2) {
-        int n = n1.size();
-        vector<vector<long long>> dp(n,vector<long long>((1<<(n)),INT_MAX));
-        for(int i=0;i<n;i++){
-            dp[0][1<<i] = n1[0]^n2[i];
-        }
-        for(int i=1;i<n;i++){
-            for(int mask=0;mask<(1<<n);mask++){
-                int setBits = countSetBits(mask);
-                if(setBits==i){
-                    for(int j=0;j<n;j++){
-                        if(!(mask & (1<<j))){
-                            dp[i][mask+(1<<j)] = min(dp[i][mask+(1<<j)],dp[i-1][mask]+(n1[i]^n2[j]));
-                        }
-                    }
+    int minimumXORSum(vector<int>& a, vector<int>& b) {
+        
+     
+        int n = b.size();
+     
+        
+        vector<int> dp(1<<n);
+        
+        for(int i=1; i<(1<<n); i++) {
+            
+           
+            vector<int> nums;
+            for(int j=0; j<n; j++)
+                if(i&(1<<j))
+                    nums.push_back(b[j]);
+            
+            int N = nums.size();
+            
+          
+            int local = 0;
+            for(int j=0; j<N; j++)
+                local += (nums[j] ^ a[j]);
+            
+           
+            dp[i] = local;
+            
+           
+            int val = a[N-1];
+            
+           
+            
+            int cnt = 0;
+            for(int j=0; j<n; j++)
+                if(i&(1<<j)) {
+                    int rmv = (i ^ (1<<j)); 
+                    int temp = dp[rmv] + (nums[cnt]^val); 
+                    cnt++;
+                    dp[i] = min(dp[i], temp);
                 }
-            }
         }
-        return dp[n-1][(1<<n)-1];
+
+       
+        return dp[(1<<n)-1];
+        
     }
 };
