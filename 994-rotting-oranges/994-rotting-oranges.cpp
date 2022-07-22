@@ -20,7 +20,7 @@ public:
             
             int k = q.size();
             cnt += k;
-           
+            // days += 1;
             while(k--){
                 int x = q.front().first , y = q.front().second;
                 q.pop();
@@ -35,7 +35,8 @@ public:
                 }            
                 
             }
-            if(!q.empty())  days += 1;
+            
+            if(!q.empty()) days++;
            
             
         }
