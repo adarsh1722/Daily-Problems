@@ -42,7 +42,7 @@ public:
             current = next;
             cnt+=1;
         }
-        head->next = reverseKGroup(next , k);
+        head->next = reverseKGroup(current , k);
         return prev;
         
         
