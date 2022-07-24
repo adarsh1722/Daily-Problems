@@ -35,7 +35,7 @@ public:
         
         ListNode* current = head , *prev = NULL , *next;
         int cnt = 1;
-        while(cnt <= k){
+        while(current && cnt <= k){
             next = current->next;
             current->next = prev;
             prev = current;
