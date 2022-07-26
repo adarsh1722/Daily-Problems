@@ -1,33 +1,30 @@
 class Solution {
 public:
-    int minimumCoins(int ind , vector<int>&coins , vector<vector<int>>&dp , int target){
-        
-        if(ind == 0){
-            if(target%coins[0] == 0){
-                return target/coins[0];
+    int coinChange(vector<int>& arr, int T) {
+           int n= arr.size();
+    
+            vector<vector<int>> dp(n,vector<int>(T+1,0));
+
+            for(int i=0; i<=T; i++){
+                if(i%arr[0] == 0)  
+                    dp[0][i] = i/arr[0];
+                else dp[0][i] = 1e9;
             }
-            else {
-                return 1e9;
+
+            for(int ind = 1; ind<n; ind++){
+                for(int target = 0; target<=T; target++){
+
+                    int notTake = 0 + dp[ind-1][target];
+                    int take = 1e9;
+                    if(arr[ind]<=target)
+                        take = 1 + dp[ind][target - arr[ind]];
+
+                     dp[ind][target] = min(notTake, take);
+                }
             }
-            
-            
-        }
-        if(dp[ind][target] != -1) return  dp[ind][target];
-        int notTake = 0 + minimumCoins(ind-1 , coins , dp , target);
-        int take = INT_MAX;
-        if(coins[ind] <= target){
-            take =  1 + minimumCoins(ind , coins , dp , target - coins[ind]);
-        }
-        
-        return dp[ind][target] = min(take ,notTake);
-    }
-    int coinChange(vector<int>& coins, int amount) {
-        
-        int n = coins.size();
-        vector<vector<int>>dp(n , vector<int>(amount+1  , -1));
-        int ans = minimumCoins(n-1 , coins , dp , amount);
-        if(ans >= 1e9) return -1;
-        return ans;
-        
+
+            int ans = dp[n-1][T];
+            if(ans >=1e9) return -1;
+            return ans;
     }
 };
