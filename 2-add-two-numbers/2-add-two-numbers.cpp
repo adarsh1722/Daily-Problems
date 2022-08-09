@@ -4,8 +4,8 @@ public:
     ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
         
         int carry = 0;
-        ListNode newHead(0);
-        ListNode *t = &newHead;
+        ListNode *newHead = new ListNode();
+        ListNode *t = newHead;
         
         while(carry || l1 || l2){
             carry += (l1 ? l1->val : 0) + (l2 ? l2->val : 0);
@@ -16,7 +16,7 @@ public:
             if(l2) l2 = l2->next;
         }
         
-        return newHead.next;
+        return newHead->next;
         
     }
 };
