@@ -3,15 +3,23 @@ class Solution {
 public:
     ListNode* middleNode(ListNode* head) {
         
-        ListNode* slow = head , *fast = head;
-        
-        while(fast && fast->next)
+        int n = 0;
+        ListNode* temp = head;
+        while(temp)
         {
-            slow = slow->next;
-            fast = fast->next->next;
+            n++;
+            temp = temp->next;
         }
-        return slow;
         
+        temp = head;
+        
+        for(int i = 1; i < n/2+1 ; i++)
+        {
+          temp = temp->next;
+        }
+        
+        return temp;
+
         
     }
 };
