@@ -10,32 +10,32 @@
  */
 class Solution {
 public:
-    ListNode* mergeTwoLists(ListNode* list1, ListNode* list2) {
-       
-        vector<int>arr;
-        ListNode* t = list1;
+    ListNode* mergeTwoLists(ListNode* l1, ListNode* l2) {
         
-        while(t){
-            arr.push_back(t->val);
-            t = t->next;
-            
-        }
-        t = list2;
-        while(t){
-            arr.push_back(t->val);
-            t = t->next;
-            
-        }
-        sort(arr.begin()  , arr.end());
-        ListNode* dummy =  new ListNode();
+        ListNode* dummy = new ListNode();
         ListNode* tail = dummy;
         
-        for(auto x : arr){
-            tail->next = new ListNode(x);
-            tail = tail->next;
+        while(l1 && l2){
+            
+            if(l1->val <= l2->val){
+                ListNode* next = l1->next;
+                tail->next = l1;
+                l1->next = NULL;
+                l1 = next;
+                tail = tail->next;
+            }
+            else{
+                ListNode* next = l2->next;
+                tail->next = l2;
+                l2->next = NULL;
+                l2 = next;
+                tail = tail->next;
+            }
+            
         }
+        if(l1) tail->next = l1;
+        if(l2) tail->next = l2;
         return dummy->next;
-        
         
         
     }
