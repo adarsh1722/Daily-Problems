@@ -2,18 +2,18 @@ class Solution {
 public:
     bool searchMatrix(vector<vector<int>>& matrix, int target) {
         
-        int m = matrix.size();
-        int n = matrix[0].size();
+        int n  =  matrix.size();
         
-        int i  = 0  , j = n-1;
-        
-        while(i < m && j >= 0){
+        for(int i = 0 ; i < n ; i++){
             
-            if(matrix[i][j] == target) return true;
-            else if(matrix[i][j] > target) j--; // decrease column
-            else i++; // increase row
-                       
+            if(binary_search(matrix[i].begin() , matrix[i].end() , target)){
+                return true;
+            }
+            
+            
         }
         return false;
+        
+        
     }
 };
