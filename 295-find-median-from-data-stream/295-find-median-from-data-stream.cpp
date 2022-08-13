@@ -1,19 +1,17 @@
 class MedianFinder {
-private :
+public:
     priority_queue<int>firstQ;
     priority_queue<int , vector<int> , greater<int>>secQ;
-    
-public:
     MedianFinder() {
         
     }
     
-     void addNum(int num) {
-        if(firstQ.empty() || (firstQ.top()>num)) firstQ.push(num); // if it belongs to the smaller half
-        else secQ.push(num); 
+    void addNum(int num) {
         
-        // rebalance the two halfs to make sure the length difference is no larger than 1
-        if(firstQ.size() > (secQ.size()+1))
+        if(firstQ.empty() || firstQ.top() > num ) firstQ.push(num);
+        else secQ.push(num);
+        
+         if(firstQ.size() > (secQ.size()+1))
         {
             secQ.push(firstQ.top());
             firstQ.pop();
@@ -23,12 +21,20 @@ public:
             firstQ.push(secQ.top());
             secQ.pop();
         }
+        
     }
-
-    // Returns the median of current data stream
+    
     double findMedian() {
-        if(firstQ.size() == secQ.size()) return firstQ.empty()?0:( (firstQ.top()+secQ.top())/2.0);
-        else return (firstQ.size() > secQ.size())? firstQ.top():secQ.top(); 
+        
+        if(firstQ.size() == secQ.size()) return (firstQ.top() + secQ.top())/2.0;
+        else return firstQ.size() > secQ.size() ? firstQ.top() : secQ.top();
+        
     }
 };
 
+/**
+ * Your MedianFinder object will be instantiated and called as such:
+ * MedianFinder* obj = new MedianFinder();
+ * obj->addNum(num);
+ * double param_2 = obj->findMedian();
+ */
