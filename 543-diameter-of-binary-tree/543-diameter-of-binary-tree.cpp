@@ -17,25 +17,16 @@ public:
         
         int lh = getMaxDiameter(r->left);
         int rh = getMaxDiameter(r->right);
-        // ans = max(ans , lh + rh);
+        ans = max(ans , lh + rh);
         return 1 + max(lh , rh);
     }
-    void dfs(TreeNode* r){
-        if(!r) return ;
-        
-        int lh = getMaxDiameter(r->left);
-        int rh = getMaxDiameter(r->right);
-        ans = max(ans , lh + rh);
-        dfs(r->left);
-        dfs(r->right);
-        
-    }
+   
     int diameterOfBinaryTree(TreeNode* root) {
         ans = 0;
         
         if(!root) return 0;
         
-        dfs(root);
+        getMaxDiameter(root);
         return ans;
         
         
