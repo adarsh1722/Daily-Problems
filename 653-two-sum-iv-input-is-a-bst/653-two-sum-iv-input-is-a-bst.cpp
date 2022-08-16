@@ -1,24 +1,26 @@
 
 class Solution {
 public:
-    void inorder(TreeNode* root , vector<int>&in){
+    void solve(TreeNode* root , vector<int>&in){
         if(!root){
             return;
         }
-        inorder(root->left , in);
+        solve(root->left  , in);
         in.push_back(root->val);
-        inorder(root->right ,in);
+        solve(root->right , in);
         
     }
     bool findTarget(TreeNode* root, int k) {
         
-        vector<int>in;
-        inorder(root , in);
-        int i = 0  , j = in.size()-1;
+        vector<int>inorder;
+        solve(root , inorder);
+        int i = 0 , j = inorder.size()-1;
+        
         while(i < j){
             
-            if(in[i] + in[j] == k) return true;
-            else if(in[i] + in[j] > k ) j--;
+            int sum = inorder[i] + inorder[j];
+            if(sum == k) return true;
+            else if(sum > k )j--;
             else i++;
             
         }
