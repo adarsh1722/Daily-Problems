@@ -2,54 +2,23 @@ class Solution {
 public:
     string reverseWords(string s) {
         
-        int n = s.size();
+        reverse(s.begin() , s.end());
         
-        stack<string>st;
+        stringstream str(s);
         
-        int start , end , i = 0;
-        
-        while(i < n && s[i] == ' '){
-            i++;
-        }
-        
-        start = i;
-        i = n-1;
-        while(i >= 0 && s[i] == ' '){
-            i--;
-        }
-        
-        end = i;
-        s += " ";
-        string str = "";
-        for(int i = start ; i <= end + 1 ; i++)
-        {
-            if(s[i] == ' '){
-                st.push(str);
-                str = "";
-                bool yes = false;
-                while(i <= end + 1 && s[i] == ' '){
-                    i += 1;
-                    yes = true;
-                }
-                if(yes){
-                    i -= 1;
-                }
+        string word , ans;
+        int spaces = 0;
+        while(str >> word){
+            
+            string temp = word;
+            if(temp != " "){
+                reverse(temp.begin() , temp.end());
+                if(ans.size() > 0) ans += " "; 
+                ans += temp;
             }
-            else{
-                str += s[i];
-            }
+           
         }
-        
-        s = "";
-        
-        while(!st.empty()){
-            s += st.top() + " ";
-            st.pop();
-        }
-        s.pop_back();
-        return s;
-        
-        
+        return ans;
         
         
     }
