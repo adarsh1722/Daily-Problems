@@ -1,30 +1,36 @@
 class Solution {
 public:
-    void solve(vector<int>&nums , vector<int>ds , vector<vector<int>>&ans , vector<int>&hashMap){
+    void recur(vector<int>ds , vector<int>&nums , vector<vector<int>>&ans , map<int , int>&mp){
         
+        // base case
         if(ds.size() == nums.size()){
             ans.push_back(ds);
-            return ;
+            return;
         }
         
-        for(int i = 0; i < nums.size() ; i++){
+        // recurring part
+        
+        for(int i = 0 ; i < nums.size() ; i++){
             
-            if(hashMap[i] == -1){
-                hashMap[i] = 1;
+            if(mp[i] == 0){
+                mp[i] = 1;
                 ds.push_back(nums[i]);
-                solve(nums , ds , ans , hashMap);
+                recur(ds , nums , ans , mp);
+                mp[i] = 0;
                 ds.pop_back();
-                hashMap[i] = -1;
             }
+            
         }
-        
         
     }
     vector<vector<int>> permute(vector<int>& nums) {
         
         vector<vector<int>>ans;
-        vector<int>ds , hashMap(nums.size() , -1);
-        solve(nums ,ds , ans , hashMap);
+        vector<int>ds;
+        map<int , int>mp;
+        recur(ds , nums , ans , mp);
         return ans;
+        
+        
     }
 };
