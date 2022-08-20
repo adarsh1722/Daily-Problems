@@ -1,29 +1,45 @@
 class Solution {
 public:
-    void dfs(vector<vector<int>>& image , int sr , int sc , int sourceColor , int newColor){
+    void dfs(int sr , int sc , int color , int parent  , vector<vector<int>>&image  , int n , int m){
         
-        if(sr < 0 || sc < 0 || sr >= image.size() || sc >= image[0].size() || image[sr][sc] != sourceColor){
-            return ;
+        // invalid boundary
+        if(sr < 0 || sc < 0 || sr >= n || sr >= m ){
+            return;
         }
-       
-        image[sr][sc] = newColor;
         
-        dfs(image, sr + 1, sc,  sourceColor, newColor);
-        dfs(image, sr - 1, sc,  sourceColor, newColor);
-        dfs(image, sr, sc + 1,  sourceColor, newColor);
-        dfs(image, sr, sc - 1,  sourceColor, newColor);
+        // invalid block
+        if(image[sr][sc] != parent){
+            return;
+        }
+        
+        // make change
+        
+        image[sr][sc] = color;
+        
+        // dfs in 4 direction
+        
+        dfs(sr+1, sc ,  color , parent , image , n , m);
+        dfs(sr-1 , sc , color , parent , image , n , m);
+        dfs(sr ,sc+1, color , parent , image , n , m);
+        dfs(sr ,sc-1, color , parent , image , n , m);
+        
         
         
     }
-    vector<vector<int>> floodFill(vector<vector<int>>& image, int sr, int sc, int newColor) {
+    vector<vector<int>> floodFill(vector<vector<int>>& image, int sr, int sc, int color) {
         
-        if(image[sr][sc] == newColor){
+        if(image[sr][sc] == color){
             return image;
         }
-     
-        dfs(image , sr , sc, image[sr][sc] , newColor);
+        int n = image.size() , m = image[0].size();
+        
+        int parent = image[sr][sc];
+        dfs(sr , sc , color , parent , image, n , m);
         return image;
         
-    
+        
+        
+        
+        
     }
 };
