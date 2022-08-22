@@ -1,28 +1,27 @@
 class Solution {
 public:
-    int maxSum(int idx , vector<int>&nums , vector<int>&dp){
+    vector<int>dp;
+    int solve(int i  , vector<int>&nums){
         
-        if(idx == 0){
+        if(i < 0) return 0;
+        if(i == 0){
             return nums[0];
         }
-        if(idx < 0){
-            return 0;
-        }
-        if(dp[idx] != -1){
-            return dp[idx];
-        }
-        int pick = nums[idx] + maxSum(idx-2  , nums, dp);
-        int notPick = 0 + maxSum(idx-1 , nums , dp);
+        if(dp[i] != -1) return dp[i];
         
-        return dp[idx] = max(pick , notPick);
+        int notPick = 0 + solve(i-1 , nums);
+        
+        int pick = nums[i] + solve(i-2 , nums);
+        
+        return dp[i] =  max(pick , notPick);
         
         
     }
     int rob(vector<int>& nums) {
         
         int n = nums.size();
-        vector<int>dp(n , -1);
-        return maxSum(n-1 , nums ,dp);
+        dp.resize(n+1 , -1);
+        return solve(n-1 , nums);
         
     }
 };
