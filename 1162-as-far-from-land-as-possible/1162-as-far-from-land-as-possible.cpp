@@ -1,58 +1,53 @@
 class Solution {
 public:
     int maxDistance(vector<vector<int>>& grid) {
+        
         int n = grid.size();
+        int m = grid[0].size();
+        
         queue<pair<int , int>>q;
-        
-        //pushing all the 1s
-        
         for(int i = 0 ; i < n ; i++){
-            for(int j = 0 ; j < n ; j++){
+            for(int j = 0 ; j < m ; j++){
                 if(grid[i][j] == 1){
                     q.push({i , j});
                 }
             }
         }
         
-        // performing multlisource bfs
+        int dx[] = {-1 , 1 , 0 , 0};
+        int dy[] = {0 , 0 , -1 , 1};
         
-        int count = 0;
-        int dx[4] = {-1 , 1, 0 , 0};
-        int dy[4] = {0 ,0 , 1 , -1};
+        int cnt = 0 ;
         while(!q.empty()){
-            count+=1;
+            
+            cnt += 1;
+            
             
             int n = q.size();
             
-            for(int i  = 0 ; i < n ; i++){
-                int x = q.front().first;
-                int y = q.front().second;
+            while(n--){
+                
+                auto [x , y ] = q.front();
                 q.pop();
-                if(x+1<=grid.size()-1 && grid[x+1][y]==0){
-                    q.push({x+1,y});
-                    grid[x+1][y]=1;
+                
+                for(int i = 0 ;  i < 4 ; i++){
+                    int x1 = x + dx[i];
+                    int y1 = y + dy[i];
+                    
+                    if(x1 >= 0 && x1 < grid.size() && y1 >= 0 && y1 < grid[0].size() && grid[x1][y1] == 0){
+                        grid[x1][y1] = 1;
+                        q.push({x1 , y1});
+                    }
+                     
+                    
                 }
-                if(x-1>=0 &&grid[x-1][y]==0){
-                    q.push({x-1,y});
-                    grid[x-1][y]=1;
-                }
-                if(y+1<=grid[0].size()-1 && grid[x][y+1]==0){
-                     q.push({x,y+1});
-                     grid[x][y+1]=1;
-                }                   
-                if(y-1>=0 &&grid[x][y-1]==0){
-                    q.push({x,y-1});
-                    grid[x][y-1]=1;
-                }
-                                
-
                 
                 
             }
-            
+
         }
         
-        return count > 1 ? count-1 :-1;
+        return cnt > 1 ? cnt-1 : -1;
         
     }
 };
