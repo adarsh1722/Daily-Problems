@@ -1,60 +1,54 @@
-/*
-// Definition for a Node.
-class Node {
-public:
-    int val;
-    Node* next;
-    Node* random;
-    
-    Node(int _val) {
-        val = _val;
-        next = NULL;
-        random = NULL;
-    }
-};
-*/
+
 
 class Solution {
 public:
     Node* copyRandomList(Node* head) {
         
-        map<Node* , Node*>mp;
         
-        Node* t = head;
+        // nodes ke beech me node dalo
+        Node* node = head;
         
-        while(t){
+        while(node){
+            Node* temp = node->next;
+            node->next = new Node(node->val);
+            node->next->next = temp;
+            node = temp;
+        }
+        
+        // random pointer ko copy krna h
+        
+        node = head;
+        
+        while(node){
             
-           
-            Node* newnode = new Node(t->val);
-            mp[t] = newnode;
-            t = t->next;
+            if(node->random){
+                
+                node->next->random = node->random->next;
+            }
+            
+            node = node->next->next;
+            
+            
             
         }
         
-        t = head;
+        // node ko alag kr lo
         
-        while(t){
+        Node* ans  = new Node(0);
+        Node* helper = ans;
+        while(head){
             
-            Node* curr = mp[t]; // first node
-            Node* x = mp[t->random]; // randome node
-            curr->random = x ;
-            t = t->next;
+            helper->next = head->next;
+            helper = helper->next;
+            
+            
+            head->next = head->next->next;
+            head = head->next;
             
         }
         
-        Node dummy(-1);
-        Node* tail = &dummy;
+        return ans->next;
         
-        t  = head;
-        while(t){
-           Node * curr = mp[t];
-           tail->next = curr;
-           tail = curr;
-           t = t->next;
-        }
-        
-      
-        return dummy.next;
         
         
     }
