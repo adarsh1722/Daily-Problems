@@ -1,33 +1,43 @@
 class Solution {
 public:
-    int f(vector<int>&nums)
-    {
-        int n = nums.size();
-        int prev2 = 0  , prev = nums[0];
-        for(int i = 1 ; i < n ; i++)
-        {
-            int take = nums[i];
-            if(i > 1) take+= prev2;
-            int notTake = 0 + prev;
-            
-            int curi = max(take , notTake);
-            prev2 = prev;
-            prev = curi;
-        }
-        return prev;
+    
+    int solve(int i  , vector<int>&nums , vector<int>&dp){
+        
+        if(i < 0) return 0;
+        if(i == 0)  return nums[0];
+        if(dp[i] != -1) return dp[i];
+        
+        int notpick = solve(i-1 , nums , dp);
+        
+        int pick = nums[i] + solve(i-2 , nums , dp);
+        
+        return dp[i] =  max(pick ,notpick);
+        
+        
+        
     }
+    int Rob(vector<int>&nums){
+        
+        int n = nums.size();
+        vector<int>dp(n , -1);
+        return solve(n-1 , nums , dp);
+        
+        
+    }
+    
+    
+
     int rob(vector<int>& nums) {
         
-        vector<int>temp1 , temp2;
-        int n = nums.size();
+        vector<int>nums1 , nums2;
+        int  n = nums.size();
         if(n == 1) return nums[0];
-        for(int i = 0 ; i < n ; i++)
-        {
-            if(i != 0) temp1.push_back(nums[i]);
-            if(i != n-1) temp2.push_back(nums[i]);
+        for(int i = 0 ; i < n ; i++){
+            if(i != 0) nums1.push_back(nums[i]);
+            if(i != n-1) nums2.push_back(nums[i]);
         }
         
-        return max(f(temp1) , f(temp2));
+        return max(Rob(nums1) , Rob(nums2));
         
     }
 };
