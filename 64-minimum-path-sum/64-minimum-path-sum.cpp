@@ -1,48 +1,27 @@
 class Solution {
 public:
-    int f(int i , int j , vector<vector<int>>&g , vector<vector<int>>&dp){
-        if(i == 0 && j == 0){
-            return g[0][0];
-        }
+    int fun(int i , int j ,vector<vector<int>>& grid,vector<vector<int>>&dp){
+        
         if(i < 0 || j < 0) return 1e9;
+        
+        if(i == 0 && j == 0) return grid[0][0];
         
         if(dp[i][j] != -1) return dp[i][j];
         
-        int up = g[i][j] + f(i-1 , j , g , dp);
-        int left = g[i][j] + f(i , j-1 , g , dp);
+        int up = fun(i-1 , j ,grid , dp);
+        int left = fun(i , j-1 , grid ,dp);
         
-        return dp[i][j] = min(up , left);        
+        return dp[i][j] = grid[i][j] +  min(up , left);
+        
         
     }
-    int minPathSum(vector<vector<int>>& g) {
-        int n = g.size() , m = g[0].size();
+    int minPathSum(vector<vector<int>>& grid) {
         
-        vector<int>prev(m , 0);
+        int n = grid.size() , m = grid[0].size();
         
-        for(int i = 0; i < n ; i++){
-            vector<int>temp(m , 0);
-            for(int j = 0 ; j < m ; j++){
-                if(i == 0 && j == 0){
-                    temp[0] = g[0][0];
-                    continue;
-                }
-                
-                int up = 1e9, left = 1e9;
-                if(i > 0){
-                    up = g[i][j] + prev[j];
-                }
-                if(j > 0){
-                    left = g[i][j] + temp[j-1];
-                }
-                temp[j] = min(up , left);                
-                
-                
-            }
-            prev = temp;
-        }
+        vector<vector<int>>dp(n , vector<int>(m , -1));
         
-        return prev[m-1];
-       
+        return fun(n-1 , m-1 , grid , dp);
         
         
         
