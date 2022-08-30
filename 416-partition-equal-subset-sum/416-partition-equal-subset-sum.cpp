@@ -1,57 +1,38 @@
 class Solution {
 public:
-    bool solve(int ind  , vector<int>&nums , vector<vector<int>>&dp ,  int  target){
+    bool solve(int i , int sum , vector<int>&arr , vector<vector<int>>&dp){
         
-        if(target == 0) return true;
-        if(ind == 0){
-            return nums[ind] == target;
-        }
-        if(dp[ind][target] != -1) return dp[ind][target];
-        int notPick = solve(ind-1 , nums , dp , target);
-        int pick = false;
-        if(target >=  nums[ind]){
-            pick = solve(ind - 1 , nums , dp , target - nums[ind]);
+        if(sum == 0 ){
+            return true;
         }
         
-        return dp[ind][target] = pick || notPick;
+        if(i == 0){
+            return sum == arr[0];
+        }
+        if(dp[i][sum] != -1) return dp[i][sum];
+        bool notpick = solve(i-1 , sum , arr , dp);
+        bool pick = false;
+        if(sum >= arr[i]){
+            pick = solve(i-1 , sum - arr[i] , arr , dp);
+        }
         
+        return dp[i][sum] = pick || notpick;
         
     }
     bool canPartition(vector<int>& nums) {
         
-        int sum = 0 ;
-        for(auto x : nums){
-            sum += x;
-        }
-        if(sum&1) return false;
-        int n = nums.size();
-        int target = (sum)/2;
-        vector<vector<int>>dp(n , vector<int>(target+1 , 0));
+      int sum = 0;
+      int n = nums.size();
+      for(auto x : nums){
+          sum += x;
+      }
         
-        for(int i = 0 ; i < n ;i++){
-            dp[i][0] = true;
-        }
-        // int target = sum/2;
-        if(nums[0] <= target){
-            dp[0][nums[0]] = true;
-        }
-        
-        for(int ind = 1 ; ind < n ; ind++){
-            for(int target = 1 ; target <= sum/2 ; target++ ){
-                    int notPick = dp[ind-1][target];
-                    int pick = false;
-                    if(target >=  nums[ind]){
-                        pick = dp[ind-1][target - nums[ind]];
-                    }
-
-                    dp[ind][target] = pick || notPick;
-            }
-        }
-        return dp[n-1][target];
-        
-        
-        
-        
+      if(sum%2 == 1){
+          return false;
+      }
+      sum /= 2;
+      vector<vector<int>>dp(n , vector<int>(sum +1 , -1));
+      return solve(n-1 , sum , nums , dp);
         
     }
 };
