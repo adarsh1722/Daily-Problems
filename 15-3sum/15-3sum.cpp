@@ -2,58 +2,42 @@ class Solution {
 public:
     vector<vector<int>> threeSum(vector<int>& nums) {
         
-        int n = nums.size() ;
-        
+        sort(nums.begin() , nums.end()); // sort
+        vector<vector<int>>res; // for storing result
+        int n = nums.size(); // get the size of the array
         if(n < 3){
-            return {};
+            return res;
         }
-        
-        sort(nums.begin() , nums.end());
-        
-        vector<vector<int>>res;
-        
-        for(int i = 0 ; i < n ; i++)
-        {
-            int low = i + 1 , high = n-1 ,target = 0 - nums[i];
+        for(int i = 0 ; i < n ; i++){
             
-            while(low < high)
-            {
-                int sum = nums[low] + nums[high];
-                if(sum < target){
-                    low++;
-                }
-                else if(sum > target){
-                    high--;
-                }
-                else{
-                    vector<int>temp{nums[i] , nums[low] , nums[high]};
+            int target = 0 - nums[i];
+            
+            int j = i+1  , k = n-1;
+            while(j < k){
+                
+                int sum =  nums[j] + nums[k];
+                if(sum  == target){
+                    vector<int>temp = {nums[i] , nums[j] , nums[k]};
                     res.push_back(temp);
                     
-                    int x = nums[low];
-                    while(low < high && x == nums[low])
-                    {
-                        low++;
-                    }
+                    int x = nums[j];
+                    while(j < k && x == nums[j])j++;
+                    x = nums[k];
+                    while(j < k && x == nums[k])k--;
                     
-                    x = nums[high];
-                    
-                    while(low < high && x == nums[high])
-                    {
-                        high--;
-                    }
                     
                 }
+                else if(sum > target) k--;
+                else j++;
                 
             }
-            
             int x = nums[i];
-            while(i < n && x == nums[i])
-            {
-                i+=1;
-            }
+            while(i <n && x ==nums[i])i++;
             i -= 1;
+            
         }
         
         return res;
+        
     }
 };
