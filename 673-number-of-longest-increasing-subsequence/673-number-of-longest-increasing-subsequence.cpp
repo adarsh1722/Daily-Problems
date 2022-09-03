@@ -1,29 +1,46 @@
 class Solution {
 public:
-    int findNumberOfLIS(vector<int>& arr) {
+    int findNumberOfLIS(vector<int>& nums) {
         
-        int  n = arr.size();
-        vector<int>dp(n , 1) , cnt(n , 1);
-        int maxi = 1;
+        int n = nums.size() , maxx = -1;
+        
+        vector<int>dp(n , -1);
+        vector<int>ct(n ,  1);
         for(int i = 0 ; i < n ; i++){
             
-            for(int prev = 0 ; prev < i ; prev++){
+            for(int j = 0 ; j < i ; j++){
                 
-                if(arr[prev] < arr[i] && 1 + dp[prev] > dp[i]){
-                    dp[i] = 1 + dp[prev];
-                    cnt[i] = cnt[prev];
+                if(nums[i] > nums[j] && 1 + dp[j] > dp[i]){
+                    
+                    dp[i] = 1 + dp[j];
+                    ct[i] = ct[j];
+                    
                 }
-                else if(arr[prev] < arr[i] && 1 + dp[prev] == dp[i]){
-                    cnt[i] += cnt[prev];
+                else if(nums[i] > nums[j] && 1 + dp[j] == dp[i]){
+                    ct[i] += ct[j];
                 }
+                
             }
-            maxi = max(maxi ,dp[i]);
+            maxx = max(maxx , dp[i]);
+            
         }
         
-        int nos = 0;
-        for(int i = 0 ; i < n ; i++) if(dp[i] == maxi) nos += cnt[i];
+        int nos = 0 ;
+        
+        // ct[i]  is wjh se add kiya h kyunki arr[i] pe ct[i] h jo ki largest h to kitne uspe khtm ho rhe h 
+        // vo add kr do
+        
+        for(auto i = 0 ; i  < n ; i++){
+            if(dp[i] == maxx){
+                nos += ct[i];
+            }
+        }
+        
         return nos;
-      
+        
+        
+        
+        
         
     }
 };
