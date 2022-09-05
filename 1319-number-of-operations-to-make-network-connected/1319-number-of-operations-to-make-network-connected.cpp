@@ -1,42 +1,37 @@
 class Solution {
 public:
-    
-    void dfs(int start ,vector<int>adj[] , vector<int>&visited){
+    void dfs(int node, vector<int>adj[] , int vis[]){
+        vis[node] = 1;
         
-        visited[start] = 1;
-        
-        for(auto nbr : adj[start]){
-            if(!visited[nbr]){
-                dfs(nbr , adj , visited);
+        for(auto nbr : adj[node]){
+            if(!vis[nbr]){
+                dfs(nbr , adj , vis);
             }
         }
-        
     }
-    int makeConnected(int n, vector<vector<int>>& connections) {
+    int makeConnected(int n, vector<vector<int>>& Adj) {
         
-      
-        int edges  =  connections.size();
-        if(edges < n-1){
-            return -1;
-        }
+        int e = Adj.size();
+        if(e < n-1) return -1;
         
         vector<int>adj[n];
         
-        for(auto e : connections){
-            adj[e[0]].push_back(e[1]);
-            adj[e[1]].push_back(e[0]);
+        for(auto it : Adj){
+            int u = it[0] , v = it[1];
+            adj[u].push_back(v);
+            adj[v].push_back(u);
+            
         }
         
-        vector<int>visited(n);
-        int connected = 0 ;
-        for(int i  = 0 ; i < n ; i++){
-            if(!visited[i]){
-                dfs(i , adj , visited);
-                connected++;
+        int cc = 0;
+        int vis[n];
+        memset(vis , 0 , sizeof vis);
+        for(int i = 0 ; i < n; i++){
+            if(!vis[i]){
+                dfs(i , adj,  vis);
+                cc++;
             }
         }
-        
-        return connected-1;
-        
+        return cc-1;
     }
 };
