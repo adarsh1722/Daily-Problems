@@ -15,7 +15,7 @@ public:
     }
     bool wordBreak(string s, vector<string>& wordDict) {
         
-        // mp[""] = 1;
+        mp[""] = 1;
         for(auto  it : wordDict){
             mp[it] = 1;
         }
