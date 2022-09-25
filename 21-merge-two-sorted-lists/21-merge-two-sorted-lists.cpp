@@ -29,6 +29,7 @@ public:
               
             }
             tail = tail->next;
+            tail->next = NULL;
             
         }
         if(l1) tail->next = l1;
