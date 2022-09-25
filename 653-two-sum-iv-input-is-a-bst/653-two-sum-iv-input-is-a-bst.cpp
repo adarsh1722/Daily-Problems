@@ -1,30 +1,28 @@
-
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
 class Solution {
 public:
-    void solve(TreeNode* root , vector<int>&in){
-        if(!root){
-            return;
-        }
-        solve(root->left  , in);
-        in.push_back(root->val);
-        solve(root->right , in);
-        
+    bool search(TreeNode* root, TreeNode *cur, int value){
+        if(root == NULL)return false;
+        return (root->val == value) && (root != cur) 
+            || (root->val < value) && search(root->right, cur, value) 
+                || (root->val > value) && search(root->left, cur, value);
+    }
+    bool dfs(TreeNode* root,  TreeNode* cur, int k){
+        if(cur == NULL)return false;
+        return search(root, cur, k - cur->val) || dfs(root, cur->left, k) || dfs(root, cur->right, k);
     }
     bool findTarget(TreeNode* root, int k) {
         
-        vector<int>inorder;
-        solve(root , inorder);
-        int i = 0 , j = inorder.size()-1;
-        
-        while(i < j){
-            
-            int sum = inorder[i] + inorder[j];
-            if(sum == k) return true;
-            else if(sum > k )j--;
-            else i++;
-            
-        }
-        return false;
-        
+        return dfs(root , root , k);
     }
 };
