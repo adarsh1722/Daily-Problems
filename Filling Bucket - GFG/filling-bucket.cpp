@@ -17,8 +17,16 @@ class Solution {
     }
     int fillingBucket(int N) {
          
-        vector<int>dp(N+1 , -1);
-        return fun(N ,dp);
+        vector<int>dp(N+1 , 0);
+        dp[0] = 1;
+        
+        for(int i = 1 ; i <= N ; i++){
+            dp[i] = dp[i-1]%mod;
+            if(i > 1)
+            dp[i] = (dp[i] +  dp[i-2])%mod;
+        }
+        return dp[N];
+        
          
     }
 };
